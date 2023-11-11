@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBfiGPcB5PS1zV5cJq7G0n3wEu66sqjrdk',
-    appId: '1:1074168326327:android:e701ccc8cd647321984532',
-    messagingSenderId: '1074168326327',
-    projectId: 'sxjalsorderingapp',
-    storageBucket: 'sxjalsorderingapp.appspot.com',
+    apiKey: 'AIzaSyAQu20GaBr_PG93ADqvgH1Zo_8fuqI5cfY',
+    appId: '1:476040550696:android:6aceb1fb0e19f1fd53d81d',
+    messagingSenderId: '476040550696',
+    projectId: 'bygroceryy',
+    storageBucket: 'bygroceryy.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyALQa-GR2EfTX5XJnSPENtyYpM-vWei8g0',
+    appId: '1:476040550696:ios:baa6c4b978deb92753d81d',
+    messagingSenderId: '476040550696',
+    projectId: 'bygroceryy',
+    storageBucket: 'bygroceryy.appspot.com',
+    iosBundleId: 'com.example.bygrocerry',
   );
 }
