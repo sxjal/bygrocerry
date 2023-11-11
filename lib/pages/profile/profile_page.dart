@@ -49,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
           content: Text("fullName is empty"),
         ),
       );
+      //pod install cannot install pod file
       return;
     } else if (emailAdress!.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
