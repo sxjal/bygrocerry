@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tasteefood/appColors/app_colors.dart';
+import 'package:bygrocerry/appColors/app_colors.dart';
 
 class TopPart extends StatelessWidget {
   const TopPart({Key? key}) : super(key: key);

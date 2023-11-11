@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:tasteefood/appColors/app_colors.dart';
-import 'package:tasteefood/pages/detailPage/details_page.dart';
-import 'package:tasteefood/route/routing_page.dart';
+import 'package:bygrocerry/appColors/app_colors.dart';
+import 'package:bygrocerry/pages/detailPage/details_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
 
 import 'single_product.dart';
 

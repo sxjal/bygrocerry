@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tasteefood/pages/cartPage/cart_page.dart';
-import 'package:tasteefood/pages/favorite/favorite_page.dart';
-import 'package:tasteefood/pages/home/home_page.dart';
-import 'package:tasteefood/pages/login/login_page.dart';
-import 'package:tasteefood/pages/profile/profile_page.dart';
-import 'package:tasteefood/route/routing_page.dart';
+import 'package:bygrocerry/pages/cartPage/cart_page.dart';
+import 'package:bygrocerry/pages/favorite/favorite_page.dart';
+import 'package:bygrocerry/pages/home/home_page.dart';
+import 'package:bygrocerry/pages/login/login_page.dart';
+import 'package:bygrocerry/pages/profile/profile_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
 
 class BuildDrawer extends StatelessWidget {
   const BuildDrawer({Key? key}) : super(key: key);

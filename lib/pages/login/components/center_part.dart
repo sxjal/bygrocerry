@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasteefood/pages/forgotPassword/forgot_password.dart';
-import 'package:tasteefood/route/routing_page.dart';
+import 'package:bygrocerry/pages/forgotPassword/forgot_password.dart';
+import 'package:bygrocerry/route/routing_page.dart';
 
 class CenterPart extends StatelessWidget {
   final TextEditingController? email;

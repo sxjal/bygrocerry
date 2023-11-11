@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tasteefood/appColors/app_colors.dart';
-import 'package:tasteefood/pages/login/login_page.dart';
-import 'package:tasteefood/pages/signup/signup_page.dart';
-import 'package:tasteefood/route/routing_page.dart';
-import 'package:tasteefood/widgets/my_button.dart';
+import 'package:bygrocerry/appColors/app_colors.dart';
+import 'package:bygrocerry/pages/login/login_page.dart';
+import 'package:bygrocerry/pages/signup/signup_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
+import 'package:bygrocerry/widgets/my_button.dart';
 
 class EndPart extends StatelessWidget {
   const EndPart({Key? key}) : super(key: key);

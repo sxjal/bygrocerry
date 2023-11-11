@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tasteefood/pages/home/home_page.dart';
-import 'package:tasteefood/route/routing_page.dart';
+import 'package:bygrocerry/pages/home/home_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
 
 class LoginAuthProvider with ChangeNotifier {
   static Pattern pattern =

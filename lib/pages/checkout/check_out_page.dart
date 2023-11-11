@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasteefood/appColors/app_colors.dart';
-import 'package:tasteefood/pages/provider/cart_provider.dart';
-import 'package:tasteefood/widgets/my_button.dart';
-import 'package:tasteefood/widgets/single_cart_item.dart';
+import 'package:bygrocerry/appColors/app_colors.dart';
+import 'package:bygrocerry/pages/provider/cart_provider.dart';
+import 'package:bygrocerry/widgets/my_button.dart';
+import 'package:bygrocerry/widgets/single_cart_item.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CheckOutPage extends StatefulWidget {

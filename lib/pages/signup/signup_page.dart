@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasteefood/pages/login/login_page.dart';
-import 'package:tasteefood/pages/signup/components/signup_auth_provider.dart';
-import 'package:tasteefood/route/routing_page.dart';
-import 'package:tasteefood/widgets/my_button.dart';
+import 'package:bygrocerry/pages/login/login_page.dart';
+import 'package:bygrocerry/pages/signup/components/signup_auth_provider.dart';
+import 'package:bygrocerry/route/routing_page.dart';
+import 'package:bygrocerry/widgets/my_button.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);

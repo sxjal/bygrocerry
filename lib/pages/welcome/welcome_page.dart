@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tasteefood/pages/welcome/components/center_part.dart';
-import 'package:tasteefood/pages/welcome/components/top_part.dart';
+import 'package:bygrocerry/pages/welcome/components/center_part.dart';
+import 'package:bygrocerry/pages/welcome/components/top_part.dart';
 import 'components/end_part.dart';
 
 class WelcomePage extends StatelessWidget {

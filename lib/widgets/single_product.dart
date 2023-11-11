@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasteefood/pages/home/home_page.dart';
-import 'package:tasteefood/pages/provider/favorite_provider.dart';
+import 'package:bygrocerry/pages/home/home_page.dart';
+import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 
 class SingleProduct extends StatefulWidget {
   final productId;

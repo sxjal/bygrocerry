@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tasteefood/pages/login/components/center_part.dart';
-import 'package:tasteefood/pages/login/components/end_part.dart';
-import 'package:tasteefood/pages/login/components/login_auth_provider.dart';
-import 'package:tasteefood/pages/login/components/top_part.dart';
+import 'package:bygrocerry/pages/login/components/center_part.dart';
+import 'package:bygrocerry/pages/login/components/end_part.dart';
+import 'package:bygrocerry/pages/login/components/login_auth_provider.dart';
+import 'package:bygrocerry/pages/login/components/top_part.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
