@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bygrocerry/appColors/app_colors.dart';
@@ -33,14 +34,18 @@ class _CheckOutPageState extends State<CheckOutPage> {
   }
 
   void openCheckout() async {
+    String name = "Sajal";
+    int id = 123456789;
+    double contact = 1234567890;
+    String email = "abc@gmail.com";
     var options = {
       'key': 'rzp_test_1DP5mmOlF5G5ag',
       'amount': num.parse(totalPrice.toString()) * 100,
-      'name': 'Yaqoob Bugti',
-      'description': 'Payment for some randonm product',
+      'name': name,
+      'description': 'Payment for order $id',
       'prefill': {
-        'contact': '8888888888',
-        'email': 'yaqoobkafeel580@gmail.com',
+        'contact': contact.toString(),
+        'email': email,
       },
       'external': {
         'wallets': ['paytm']
@@ -48,6 +53,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     };
 
     try {
+      print("loading razorpay");
       _razorpay.open(options);
     } catch (e) {
       print(e.toString());
