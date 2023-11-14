@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         if (documentSnapshot.exists) {
           userModel = UserModel.fromDocument(documentSnapshot);
         } else {
-          print("Document does not exist the database");
+          print("Document does not exist in the database");
         }
       },
     );
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
   Widget buildProduct(
       {required Stream<QuerySnapshot<Map<String, dynamic>>>? stream}) {
     return Container(
-      height: size!.height/3+40,
+      height: size!.height / 3 + 40,
       child: StreamBuilder(
         stream: stream,
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {

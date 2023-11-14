@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Testee Food',
+        title: 'By Grocerries Food',
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             iconTheme: IconThemeData(

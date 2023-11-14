@@ -44,12 +44,12 @@ class SecondPart extends StatelessWidget {
           ),
           Row(
             children: [
-              Text("\$$productPrice"),
+              Text("\₹$productPrice"),
               SizedBox(
                 width: 20,
               ),
               Text(
-                "\$$productOldPrice",
+                "\₹$productOldPrice",
                 style: TextStyle(
                   decoration: TextDecoration.lineThrough,
                 ),
