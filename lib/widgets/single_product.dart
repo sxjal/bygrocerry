@@ -64,7 +64,7 @@ class _SingleProductState extends State<SingleProduct> {
           Container(
             margin: EdgeInsets.all(12.0),
             alignment: Alignment.topRight,
-            height:size!.height*0.3,
+            height: size!.height * 0.3,
             width: size!.width / 2 - 20,
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -118,7 +118,7 @@ class _SingleProductState extends State<SingleProduct> {
                 width: 20,
               ),
               Text(
-                "\$${widget.productPrice}",
+                "\₹${widget.productPrice}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
