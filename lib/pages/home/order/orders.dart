@@ -1,50 +1,50 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:flutter/material.dart';
+// import 'package:firebase_database/firebase_database.dart';
 
-class OrdersPage extends StatefulWidget {
-  @override
-  _OrdersPageState createState() => _OrdersPageState();
-}
+// class OrdersPage extends StatefulWidget {
+//   @override
+//   _OrdersPageState createState() => _OrdersPageState();
+// }
 
-FirebaseDatabase database = FirebaseDatabase.instance;
-DatabaseReference databaseReference = database.reference();
-final firebaseApp = Firebase.app();
-final rtdb = FirebaseDatabase.instanceFor(
-    app: firebaseApp,
-    databaseURL: 'https://your-realtime-database-url.firebaseio.com/');
+// FirebaseDatabase database = FirebaseDatabase.instance;
+// DatabaseReference databaseReference = database.ref();
+// final firebaseApp = Firebase.app();
+// final rtdb = FirebaseDatabase.instanceFor(
+//     app: firebaseApp,
+//     databaseURL: 'https://your-realtime-database-url.firebaseio.com/');
 
-class _OrdersPageState extends State<OrdersPage> {
-  final databaseRef =
-      FirebaseDatabase.instance.reference(); //database reference object
+// class _OrdersPageState extends State<OrdersPage> {
+//   final databaseRef =
+//       FirebaseDatabase.instance.reference(); //database reference object
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Orders'),
-      ),
-      body: FutureBuilder<DataSnapshot>(
-        future: databaseRef.child('orders').once(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Orders'),
+//       ),
+//       body: FutureBuilder<DataSnapshot>(
+//         future: databaseRef.child('orders').once(),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return Center(child: CircularProgressIndicator());
+//           }
 
-          if (!snapshot.hasData) {
-            return Text('No orders yet');
-          }
+//           if (!snapshot.hasData) {
+//             return Text('No orders yet');
+//           }
 
-          Map<dynamic, dynamic> orders = snapshot.data!.value;
-          return ListView(
-            children: orders.entries.map((entry) {
-              return ListTile(
-                title: Text('Order ID: ${entry.key}'),
-                subtitle: Text('Total: ${entry.value['total']}'),
-              );
-            }).toList(),
-          );
-        },
-      ),
-    );
-  }
-}
+//           Map<dynamic, dynamic> orders = snapshot.data!.value;
+//           return ListView(
+//             children: orders.entries.map((entry) {
+//               return ListTile(
+//                 title: Text('Order ID: ${entry.key}'),
+//                 subtitle: Text('Total: ${entry.value['total']}'),
+//               );
+//             }).toList(),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

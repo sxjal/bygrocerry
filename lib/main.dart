@@ -1,4 +1,4 @@
-import 'package:bygrocerry/adminpanel.dart';
+//import 'package:bygrocerry/adminpanel.dart';
 import 'package:bygrocerry/firebase_options.dart';
 import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
