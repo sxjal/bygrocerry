@@ -6,6 +6,7 @@ import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/widgets/my_button.dart';
 import 'package:bygrocerry/widgets/single_cart_item.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class CheckOutPage extends StatefulWidget {
   const CheckOutPage({Key? key}) : super(key: key);
@@ -61,6 +62,35 @@ class _CheckOutPageState extends State<CheckOutPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    void openCheckout() async {
+      // Generate a unique ID for the order
+      String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+
+      // Store the order in Firebase Realtime Database
+
+      // ...
+
+      await FirebaseDatabase.instance
+          .reference()
+          .child('orders')
+          .child(orderId)
+          .set({
+        'userId': 'user123',
+        'amount': totalPrice,
+        'Items': 'item1, item2, item3',
+        'Address': 'address',
+        'Status': 'Order Received',
+        'Date': 'date',
+        'Time': 'time',
+        'Payment': 'payment',
+        'OrderId': 'orderId',
+        'Accepted': bool.parse(false.toString()),
+        // Add other order details here
+      });
+
+      // Continue with the checkout process...
+    }
+
     print("Payment Susccess");
   }
 
@@ -79,7 +109,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
     double subTotal = cartProvider.subTotal();
 
-    double discount = 5;
+    double discount = 0;
     int shipping = 10;
 
     double discountValue = (subTotal * discount) / 100;

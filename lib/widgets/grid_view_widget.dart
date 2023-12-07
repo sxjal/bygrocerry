@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:bygrocerry/appColors/app_colors.dart';
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
-
 import 'single_product.dart';
 
 class GridViewWidget extends StatefulWidget {
@@ -37,7 +36,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.id);
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

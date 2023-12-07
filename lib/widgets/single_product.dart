@@ -33,6 +33,16 @@ class SingleProduct extends StatefulWidget {
 class _SingleProductState extends State<SingleProduct> {
   bool isFavorite = false;
 
+  Widget buildimage() {
+    final Uri? uri = Uri.tryParse(widget.productImage);
+
+    if (uri == null || !uri.hasScheme) {
+      return Text('Invalid URL');
+    }
+
+    return Image.network(widget.productImage);
+  }
+
   @override
   Widget build(BuildContext context) {
     FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
@@ -86,9 +96,9 @@ class _SingleProductState extends State<SingleProduct> {
                         productId: widget.productId,
                         productCategory: widget.productCategory,
                         productRate: widget.productRate,
-                        productOldPrice: widget.productOldPrice,
-                        productPrice: widget.productPrice,
-                        productImage: widget.productImage,
+                        productOldPrice: double.parse(widget.productOldPrice),
+                        productPrice: double.parse(widget.productPrice),
+                        productImage: buildimage,
                         productFavorite: true,
                         productName: widget.productName,
                       );

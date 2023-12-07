@@ -129,8 +129,9 @@ class _HomePageState extends State<HomePage> {
                       productId: data["productId"],
                       productImage: data["productImage"],
                       productName: data["productName"],
-                      productOldPrice: data["productOldPrice"],
-                      productPrice: data["productPrice"],
+                      productOldPrice:
+                          (data["productOldPrice"] as num).toDouble(),
+                      productPrice: (data["productPrice"] as num).toDouble(),
                       productRate: data["productRate"],
                       productDescription: data["productDescription"],
                     ),
