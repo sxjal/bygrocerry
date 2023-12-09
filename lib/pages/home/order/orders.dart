@@ -38,7 +38,7 @@ class _OrdersPageState extends State<OrdersPage> {
             return Text('No orders yet');
           }
 
-          Object? orders = snapshot.data!.value;
+          //  Object? orders = snapshot.data!.value;
           // return ListView(
           //   children: orders?.entries.map((entry) {
           //     return ListTile(
