@@ -40,7 +40,20 @@ class _PaymentStatusPageState extends State<PaymentStatusPage> {
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
                   ),
             Text(
-                "Payment ${widget.paymentSuccessful ? "Successful" : "Failed"}"),
+              "Payment ${widget.paymentSuccessful ? "Successful" : "Failed"}",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: widget.paymentSuccessful ? Colors.green : Colors.red,
+              ),
+            ),
+            Text(
+              "Redirecting to ${widget.paymentSuccessful ? "Orders" : "Checkout"}",
+              style: TextStyle(
+                fontSize: 16,
+                color: widget.paymentSuccessful ? Colors.green : Colors.red,
+              ),
+            ),
           ],
         ),
       ),

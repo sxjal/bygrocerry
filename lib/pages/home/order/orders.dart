@@ -16,7 +16,7 @@ final rtdb = FirebaseDatabase.instanceFor(
 
 class _OrdersPageState extends State<OrdersPage> {
   final databaseRef =
-      FirebaseDatabase.instance.reference(); //database reference object
+      FirebaseDatabase.instance.ref(); //database reference object
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +39,15 @@ class _OrdersPageState extends State<OrdersPage> {
           }
 
           Object? orders = snapshot.data!.value;
-          return ListView(
-            children: orders?.entries.map((entry) {
-              return ListTile(
-                title: Text('Order ID: ${entry.key}'),
-                subtitle: Text('Total: ${entry.value['total']}'),
-              );
-            }).toList(),
-          );
+          // return ListView(
+          //   children: orders?.entries.map((entry) {
+          //     return ListTile(
+          //       title: Text('Order ID: ${entry.key}'),
+          //       subtitle: Text('Total: ${entry.value['total']}'),
+          //     );
+          //   }).toList(),
+          // );
+          return Text("Sajal");
         },
       ),
     );
