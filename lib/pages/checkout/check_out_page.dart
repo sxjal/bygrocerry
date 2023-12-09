@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:bygrocerry/pages/checkout/paymentstatus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bygrocerry/appColors/app_colors.dart';
 import 'package:bygrocerry/pages/provider/cart_provider.dart';
@@ -6,6 +8,11 @@ import 'package:bygrocerry/widgets/my_button.dart';
 import 'package:bygrocerry/widgets/single_cart_item.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
+
+String date = DateFormat.yMMMd().format(tz.TZDateTime.now(tz.local));
+String time = DateFormat.jm().format(tz.TZDateTime.now(tz.local));
 
 class CheckOutPage extends StatefulWidget {
   const CheckOutPage({Key? key}) : super(key: key);
@@ -17,30 +24,20 @@ class CheckOutPage extends StatefulWidget {
 class _CheckOutPageState extends State<CheckOutPage> {
   late Razorpay _razorpay;
   late double totalPrice;
+  Map<String, int> items = {};
+  double? shipping = 30.0;
 
-  @override
-  void initState() {
-    super.initState();
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _razorpay.clear();
-  }
-
-  void openCheckout() async {
+  void openCheckout(CartProvider cartProvider) async {
     String name = "Sajal";
     int id = 123456789;
     double contact = 1234567890;
     String email = "abc@gmail.com";
     var options = {
       'key': 'rzp_test_1DP5mmOlF5G5ag',
-      'amount': num.parse(totalPrice.toString()) * 100,
+      'amount': num.parse(
+            totalPrice.toString(),
+          ) *
+          100,
       'name': name,
       'description': 'Payment for order $id',
       'prefill': {
@@ -60,45 +57,95 @@ class _CheckOutPageState extends State<CheckOutPage> {
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    void openCheckout() async {
-      // Generate a unique ID for the order
-      String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+  void afterCheckout() async {
+    // Generate a unique ID for the order
+    String orderId = DateTime.now().millisecondsSinceEpoch.toString();
 
-      // Store the order in Firebase Realtime Database
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String? userId = auth.currentUser?.uid;
 
-      // ...
-
-      await FirebaseDatabase.instance
-          .reference()
-          .child('orders')
-          .child(orderId)
-          .set({
-        'userId': 'user123',
+    print(totalPrice);
+    print(items);
+    print("inside checkout");
+    await FirebaseDatabase.instance.ref().child('orders').child(orderId).set(
+      {
+        'userId': userId,
+        'DeliveryFee': deliveryFee,
+        'SubTotal': totalPrice - deliveryFee,
         'amount': totalPrice,
-        'Items': 'item1, item2, item3',
+        'Items': items,
         'Address': 'address',
         'Status': 'Order Received',
-        'Date': 'date',
-        'Time': 'time',
+        'Date': date, //current date,
+        'Time': time, //curren time,
+        'name': 'name',
+        'contact': 'contact',
         'Payment': 'payment',
         'OrderId': 'orderId',
+        // ignore: sdk_version_since
         'Accepted': bool.parse(false.toString()),
         // Add other order details here
-      });
+      },
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentStatusPage(paymentSuccessful: true),
+      ), // or false if the payment failed
+    );
+    // Continue with the checkout process...
+  }
 
-      // Continue with the checkout process...
-    }
-
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print("Payment Susccess");
+    print("calling afterCheckout();");
+    afterCheckout();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     print("Payment error");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PaymentStatusPage(paymentSuccessful: false),
+      ), // or false if the payment failed
+    );
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     print("EXTERNAL_WALLET ");
+  }
+
+  double deliveryFee = 0.0;
+
+  void getDeliveryFee() async {
+    Future<DataSnapshot> del = FirebaseDatabase.instance
+        .ref()
+        .child('adminvariables')
+        .child('deliveryFee')
+        .get();
+    del.then((DataSnapshot snapshot) {
+      setState(() {
+        deliveryFee = double.parse(snapshot.value.toString());
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getDeliveryFee();
+    _razorpay = Razorpay();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _razorpay.clear();
   }
 
   @override
@@ -107,15 +154,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
     cartProvider.getCartData();
 
     double subTotal = cartProvider.subTotal();
-
-    double discount = 0;
-    int shipping = 10;
-
-    double discountValue = (subTotal * discount) / 100;
-
-    double value = subTotal - discountValue;
-
-    totalPrice = value += shipping;
+    double value = subTotal + deliveryFee;
+    totalPrice = value;
 
     if (cartProvider.getCartList.isEmpty) {
       setState(() {
@@ -147,6 +187,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     itemCount: cartProvider.getCartList.length,
                     itemBuilder: (ctx, index) {
                       var data = cartProvider.cartList[index];
+                      items[data.productName] = data.productQuantity;
+                      print(items);
                       return SingleCartItem(
                         productId: data.productId,
                         productCategory: data.productCategory,
@@ -163,27 +205,23 @@ class _CheckOutPageState extends State<CheckOutPage> {
               children: [
                 ListTile(
                   leading: Text("Sub Total"),
-                  trailing: Text("\$ $subTotal"),
-                ),
-                ListTile(
-                  leading: Text("Discount"),
-                  trailing: Text("%5"),
+                  trailing: Text("\₹ $subTotal"),
                 ),
                 ListTile(
                   leading: Text("Shiping"),
-                  trailing: Text("\$10"),
+                  trailing: Text("\₹ $deliveryFee"),
                 ),
                 Divider(
                   thickness: 2,
                 ),
                 ListTile(
                   leading: Text("Total"),
-                  trailing: Text("\$ $totalPrice"),
+                  trailing: Text("\₹ $totalPrice"),
                 ),
                 cartProvider.getCartList.isEmpty
                     ? Text("")
                     : MyButton(
-                        onPressed: () => openCheckout(),
+                        onPressed: () => openCheckout(cartProvider),
                         text: "Buy",
                       ),
               ],

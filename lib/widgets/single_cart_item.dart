@@ -94,7 +94,7 @@ class _SingleCartItemState extends State<SingleCartItem> {
                         widget.productCategory,
                       ),
                       Text(
-                        "\$ ${widget.productPrice * widget.productQuantity}",
+                        "\₹ ${widget.productPrice * widget.productQuantity}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -125,6 +125,10 @@ class _SingleCartItemState extends State<SingleCartItem> {
                                   quantity--;
                                   quantityFuntion();
                                 });
+                              } else if (quantity == 1) {
+                                deleteProductFuntion();
+                              } else {
+                                print("error");
                               }
                             },
                           ),

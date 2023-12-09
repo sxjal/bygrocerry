@@ -4,15 +4,18 @@ import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:bygrocerry/pages/login/components/login_auth_provider.dart';
 import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 import 'package:bygrocerry/pages/signup/components/signup_auth_provider.dart';
 import 'package:bygrocerry/pages/welcome/welcome_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
