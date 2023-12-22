@@ -170,11 +170,18 @@ class _SignupPageState extends State<SignupPage> {
                             decoration: InputDecoration(
                               suffixIcon: _passwordFocusNode.hasFocus &&
                                       password.text.isNotEmpty
-                                  ? Icon(
-                                      visibility
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
+                                  ? IconButton(
+                                      icon: Icon(
+                                        visibility
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                      ),
                                       color: Color.fromARGB(93, 255, 255, 255),
+                                      onPressed: () {
+                                        setState(() {
+                                          visibility = !visibility;
+                                        });
+                                      },
                                     )
                                   : null,
                               label: Text(
