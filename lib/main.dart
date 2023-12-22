@@ -4,6 +4,7 @@ import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:bygrocerry/pages/login/components/login_auth_provider.dart';
 import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/pages/provider/favorite_provider.dart';
@@ -20,7 +21,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
