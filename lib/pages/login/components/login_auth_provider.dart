@@ -21,7 +21,29 @@ class LoginAuthProvider with ChangeNotifier {
     if (emailAdress!.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Email address is empty"),
+          backgroundColor:
+              Color.fromARGB(255, 176, 66, 20), // Change the background color
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          dismissDirection: DismissDirection.horizontal,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50), // Add rounded corners
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: Text(
+                "Please enter an email address",
+                style: TextStyle(color: Colors.white), // Change the text color
+              ),
+            ),
+          ),
+          behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+          margin: EdgeInsets.only(
+            bottom: 20,
+            left: 50,
+            right: 50,
+          ), // Add margin
+          // Add padding
         ),
       );
       return;
