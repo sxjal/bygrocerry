@@ -1,4 +1,6 @@
+import 'package:bygrocerry/pages/cartPage/cart_page.dart';
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
+import 'package:bygrocerry/pages/profile/profile_page.dart';
 import 'package:bygrocerry/pages/welcome/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import 'package:bygrocerry/pages/home/mainpage.dart';
 
 late UserModel userModel;
 Size? size;
@@ -72,11 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true, //to make floating action button notch transparent
+      extendBody: false, //to make floating action button notch transparent
 
       //to avoid the floating action button overlapping behavior,
       // when a soft keyboard is displayed
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
 
       bottomNavigationBar: StylishBottomBar(
         backgroundColor: Colors.white,
@@ -99,22 +102,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomBarItem(
             icon: const Icon(
-              Icons.style_outlined,
+              Icons.favorite_border,
             ),
-            selectedIcon: const Icon(Icons.style),
             selectedColor: Colors.green,
             title: const Text('Favorites'),
           ),
           BottomBarItem(
             icon: const Icon(
-              Icons.person_outline,
+              Icons.history,
             ),
             selectedIcon: const Icon(
-              Icons.person,
+              Icons.history_edu,
             ),
             selectedColor: Colors.green,
             title: const Text(
-              'Profile',
+              'Order History',
             ),
           ),
         ],
@@ -133,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => WelcomePage(),
+                builder: (context) => CartPage(),
               ),
             );
           });
@@ -145,15 +147,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      body: SafeArea(
-        child: PageView(
-          controller: controller,
-          children: const [
-            Center(child: Text('Home')),
-            Center(child: Text('Style')),
-            Center(child: Text('Profile')),
-          ],
-        ),
+      body: PageView(
+        controller: controller,
+        children: [
+          HomePage(),
+          Center(child: Text('Style')),
+          Center(child: Text('Orders')),
+        ],
       ),
     );
   }

@@ -13,6 +13,7 @@ class ProfilePage extends StatefulWidget {
 
   RegExp regExp = RegExp(ProfilePage.pattern.toString());
 
+  ProfilePage({Key? key}) : super(key: key);
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
