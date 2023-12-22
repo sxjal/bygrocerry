@@ -1,8 +1,8 @@
+import 'package:bygrocerry/pages/login/login_page.dart';
 import 'package:bygrocerry/pages/signup/signup_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:bygrocerry/widgets/my_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -74,7 +74,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             "Forgot Password",
                             style: TextStyle(
                               color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 56,
+                              fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -92,11 +92,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             Container(
                               margin: const EdgeInsets.all(5),
                               child: const Text(
-                                "A world of",
+                                "Resetting your password",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 227, 223, 223),
-                                  fontSize: 36,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -104,11 +104,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             Container(
                               margin: const EdgeInsets.all(5),
                               child: const Text(
-                                "possibility in",
+                                "is as simple as a",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 227, 223, 223),
-                                  fontSize: 36,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -116,11 +116,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             Container(
                               margin: const EdgeInsets.all(5),
                               child: const Text(
-                                "an app",
+                                "click away",
                                 textAlign: TextAlign.start,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 227, 223, 223),
-                                  fontSize: 36,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -161,65 +161,120 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.045,
-                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         right: MediaQuery.of(context).size.width * 0.10),
                     //  child: loginAuthProvider.loading == true
-                    child: false
-                        ? CircularProgressIndicator(
-                            color: Color.fromARGB(255, 251, 251, 251),
-                          )
-                        : GestureDetector(
-                            onTap: () async {
-                              await FirebaseAuth.instance
-                                  .sendPasswordResetEmail(email: email.text)
-                                  .whenComplete(
-                                    () => ScaffoldMessenger.of(context)
-                                        .showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          "You'll receive an email shortly if an account exists with the email you entered.",
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 0),
-                              padding: const EdgeInsets.only(
-                                top: 5,
-                                left: 20,
-                                right: 20,
-                                bottom: 5,
+                    child: GestureDetector(
+                      onTap: () async {
+                        if (email.text.trim().isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: Color.fromARGB(255, 176, 66,
+                                  20), // Change the background color
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              dismissDirection: DismissDirection.horizontal,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    50), // Add rounded corners
                               ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40),
-                                color: const Color.fromARGB(255, 255, 255, 255),
+                              content: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: Center(
+                                  child: Text(
+                                    "Please enter an email address",
+                                    style: TextStyle(
+                                        color: Colors
+                                            .white), // Change the text color
+                                  ),
+                                ),
                               ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "log me in",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color.fromARGB(
-                                          255, 60, 119, 121),
+                              behavior: SnackBarBehavior
+                                  .floating, // Make the SnackBar floating
+                              margin: EdgeInsets.only(
+                                bottom: 20,
+                                left: 50,
+                                right: 50,
+                              ), // Add margin
+                              // Add padding
+                            ),
+                          );
+                          return;
+                        }
+                        await FirebaseAuth.instance
+                            .sendPasswordResetEmail(email: email.text)
+                            .whenComplete(
+                          () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Color.fromARGB(255, 14, 183,
+                                    95), // Change the background color
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                dismissDirection: DismissDirection.horizontal,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      20), // Add rounded corners
+                                ),
+                                content: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Center(
+                                    child: Text(
+                                      "You'll receive an email shortly if an account exists with the email you've entered.",
+                                      style: TextStyle(color: Colors.white),
+                                      // Change the text color
                                     ),
                                   ),
-                                  const Icon(
-                                    Icons.arrow_forward_sharp,
-                                    color: Color.fromARGB(255, 60, 119, 121),
-                                  ),
-                                ],
+                                ),
+                                behavior: SnackBarBehavior
+                                    .floating, // Make the SnackBar floating
+                                margin: EdgeInsets.only(
+                                  bottom: 20,
+                                  left: 50,
+                                  right: 50,
+                                ), // Add margin
+                                // Add padding
+                              ),
+                            );
+                            RoutingPage.goTonext(
+                              context: context,
+                              navigateTo: LoginPage(),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 5,
+                          left: 20,
+                          right: 20,
+                          bottom: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Reset Password",
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 60, 119, 121),
                               ),
                             ),
-                          ),
+                            const Icon(
+                              Icons.arrow_forward_sharp,
+                              color: Color.fromARGB(255, 60, 119, 121),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Container(
                     margin: EdgeInsets.only(
@@ -229,7 +284,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "First time at Heavens Mart?",
+                          "Remember your password?",
                           style: GoogleFonts.poppins(
                             color: const Color.fromARGB(96, 255, 255, 255),
                           ),
@@ -242,7 +297,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             );
                           },
                           child: Text(
-                            "Sign up",
+                            "Login",
                             style: GoogleFonts.poppins(
                               textStyle: const TextStyle(
                                 color: Color.fromARGB(203, 255, 255, 255),
