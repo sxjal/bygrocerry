@@ -97,7 +97,7 @@ class LoginAuthProvider with ChangeNotifier {
             padding: const EdgeInsets.all(2.0),
             child: Center(
               child: Text(
-                "Passowrd must be atleast 8 characters long",
+                "Password must be atleast 8 characters long",
                 style: TextStyle(color: Colors.white), // Change the text color
               ),
             ),

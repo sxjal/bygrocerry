@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:bygrocerry/pages/login/login_page.dart';
 import 'package:bygrocerry/pages/signup/components/signup_auth_provider.dart';
-import 'package:bygrocerry/route/routing_page.dart';
-import 'package:bygrocerry/widgets/my_button.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -206,10 +204,17 @@ class _SignupPageState extends State<SignupPage> {
                               color: const Color.fromARGB(255, 255, 255, 255),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text("Let me in"),
+                                Text(
+                                  "Sign Me up",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        const Color.fromARGB(255, 60, 119, 121),
+                                  ),
+                                ),
                                 const Icon(
                                   Icons.arrow_forward_sharp,
                                   color: Color.fromARGB(255, 60, 119, 121),
@@ -220,7 +225,9 @@ class _SignupPageState extends State<SignupPage> {
                         : Container(
                             margin: EdgeInsets.only(
                                 right: MediaQuery.of(context).size.width * 0.1),
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                           ),
                   ),
                   SizedBox(
