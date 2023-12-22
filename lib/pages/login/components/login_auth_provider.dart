@@ -13,10 +13,11 @@ class LoginAuthProvider with ChangeNotifier {
 
   UserCredential? userCredential;
 
-  void loginPageVaidation(
-      {required TextEditingController? emailAdress,
-      required TextEditingController? password,
-      required BuildContext context}) async {
+  void loginPageVaidation({
+    required TextEditingController? emailAdress,
+    required TextEditingController? password,
+    required BuildContext context,
+  }) async {
     if (emailAdress!.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -27,21 +28,87 @@ class LoginAuthProvider with ChangeNotifier {
     } else if (!regExp.hasMatch(emailAdress.text.trim())) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Invalid email address"),
+          backgroundColor:
+              Color.fromARGB(255, 176, 66, 20), // Change the background color
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          dismissDirection: DismissDirection.horizontal,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50), // Add rounded corners
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: Text(
+                "Invalid email address",
+                style: TextStyle(color: Colors.white), // Change the text color
+              ),
+            ),
+          ),
+          behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+          margin: EdgeInsets.only(
+            bottom: 20,
+            left: 100,
+            right: 100,
+          ), // Add margin
+          // Add padding
         ),
       );
       return;
     } else if (password!.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Password is empty"),
+          backgroundColor:
+              Color.fromARGB(255, 176, 66, 20), // Change the background color
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          dismissDirection: DismissDirection.horizontal,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50), // Add rounded corners
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: Text(
+                "Please enter a valid password",
+                style: TextStyle(color: Colors.white), // Change the text color
+              ),
+            ),
+          ),
+          behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+          margin: EdgeInsets.only(
+            bottom: 20,
+            left: 50,
+            right: 50,
+          ), // Add margin
+          // Add padding
         ),
       );
       return;
     } else if (password.text.length < 8) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Password must be 8"),
+          backgroundColor:
+              Color.fromARGB(255, 176, 66, 20), // Change the background color
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          dismissDirection: DismissDirection.horizontal,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50), // Add rounded corners
+          ),
+          content: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Center(
+              child: Text(
+                "Passowrd must be atleast 8 characters long",
+                style: TextStyle(color: Colors.white), // Change the text color
+              ),
+            ),
+          ),
+          behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+          margin: EdgeInsets.only(
+            bottom: 20,
+            left: 20,
+            right: 20,
+          ), // Add margin
+          // Add padding
         ),
       );
       return;
@@ -49,6 +116,7 @@ class LoginAuthProvider with ChangeNotifier {
       try {
         loading = true;
         notifyListeners();
+
         userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
           email: emailAdress.text,
@@ -57,6 +125,38 @@ class LoginAuthProvider with ChangeNotifier {
             .then(
           (value) async {
             loading = false;
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                //duration
+                duration: Duration(seconds: 2),
+                backgroundColor: Color.fromARGB(
+                    255, 12, 194, 121), // Change the background color
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                dismissDirection: DismissDirection.horizontal,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(50), // Add rounded corners
+                ),
+                content: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Center(
+                    child: Text(
+                      "Login Successfull",
+                      style: TextStyle(
+                          color: Colors.white), // Change the text color
+                    ),
+                  ),
+                ),
+                behavior:
+                    SnackBarBehavior.floating, // Make the SnackBar floating
+                margin: EdgeInsets.only(
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                ), // Add margin
+                // Add padding
+              ),
+            );
             notifyListeners();
             await RoutingPage.goTonext(
               context: context,
@@ -67,18 +167,96 @@ class LoginAuthProvider with ChangeNotifier {
         );
         notifyListeners();
       } on FirebaseAuthException catch (e) {
+        print("inside catch");
         loading = false;
         notifyListeners();
+        print(e.code);
+
         if (e.code == "user-not-found") {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("user-not-found"),
+              backgroundColor: Color.fromARGB(
+                  255, 176, 66, 20), // Change the background color
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              dismissDirection: DismissDirection.horizontal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Add rounded corners
+              ),
+              content: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Text(
+                    "User not found",
+                    style:
+                        TextStyle(color: Colors.white), // Change the text color
+                  ),
+                ),
+              ),
+              behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+              margin: EdgeInsets.only(
+                bottom: 20,
+                left: 80,
+                right: 80,
+              ), // Add margin
+              // Add padding
+            ),
+          );
+        } else if (e.code == "INVALID_LOGIN_CREDENTIALS") {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Color.fromARGB(
+                  255, 176, 66, 20), // Change the background color
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              dismissDirection: DismissDirection.horizontal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Add rounded corners
+              ),
+              content: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Text(
+                    "Invalid email address or Password",
+                    style:
+                        TextStyle(color: Colors.white), // Change the text color
+                  ),
+                ),
+              ),
+              behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+              margin: EdgeInsets.only(
+                bottom: 20,
+                left: 20,
+                right: 20,
+              ), // Add margin
+              // Add padding
             ),
           );
         } else if (e.code == "wrong-password") {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("wrong-password"),
+              backgroundColor: Color.fromARGB(
+                  255, 176, 66, 20), // Change the background color
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              dismissDirection: DismissDirection.horizontal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), // Add rounded corners
+              ),
+              content: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Center(
+                  child: Text(
+                    "Invalid email address or Password",
+                    style:
+                        TextStyle(color: Colors.white), // Change the text color
+                  ),
+                ),
+              ),
+              behavior: SnackBarBehavior.floating, // Make the SnackBar floating
+              margin: EdgeInsets.only(
+                bottom: 20,
+                left: 20,
+                right: 20,
+              ), // Add margin
+              // Add padding
             ),
           );
         }

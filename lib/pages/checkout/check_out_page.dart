@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:bygrocerry/appColors/app_colors.dart';
 import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/widgets/my_button.dart';
-import 'package:bygrocerry/widgets/single_cart_item.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 String date = DateFormat.yMMMd().format(tz.TZDateTime.now(tz.local));
 String time = DateFormat.jm().format(tz.TZDateTime.now(tz.local));
@@ -26,6 +26,28 @@ class _CheckOutPageState extends State<CheckOutPage> {
   late double totalPrice;
   Map<String, int> items = {};
   double? shipping = 30.0;
+
+  int quantity = 1;
+
+  void quantityFuntion(productId) {
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("userCart")
+        .doc(productId)
+        .update({
+      "productQuantity": quantity,
+    });
+  }
+
+  void deleteProductFuntion(productId) {
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("userCart")
+        .doc(productId)
+        .delete();
+  }
 
   void openCheckout(CartProvider cartProvider) async {
     String name = "Sajal";
@@ -50,7 +72,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
     };
 
     try {
-      print("loading razorpay");
       _razorpay.open(options);
     } catch (e) {
       print(e.toString());
@@ -64,9 +85,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
     FirebaseAuth auth = FirebaseAuth.instance;
     String? userId = auth.currentUser?.uid;
 
-    print(totalPrice);
-    print(items);
-    print("inside checkout");
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    await firestore
+        .collection('orders')
+        .doc(userId)
+        .collection('orderId')
+        .doc(orderId)
+        .set({
+      'userId': userId,
+      'orderID': orderId,
+    });
+
     await FirebaseDatabase.instance.ref().child('orders').child(orderId).set(
       {
         'userId': userId,
@@ -97,13 +126,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    print("Payment Susccess");
-    print("calling afterCheckout();");
     afterCheckout();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    print("Payment error");
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -112,9 +138,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    print("EXTERNAL_WALLET ");
-  }
+  void _handleExternalWallet(ExternalWalletResponse response) {}
 
   double deliveryFee = 0.0;
 
@@ -169,65 +193,240 @@ class _CheckOutPageState extends State<CheckOutPage> {
         backgroundColor: Colors.transparent,
         centerTitle: true,
         title: Text(
-          "Check out",
+          "Heavens Mart",
           style: TextStyle(
             color: AppColors.KblackColor,
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: cartProvider.getCartList.isEmpty
-                ? Center(
-                    child: Text("No Product"),
-                  )
-                : ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: cartProvider.getCartList.length,
-                    itemBuilder: (ctx, index) {
-                      var data = cartProvider.cartList[index];
-                      items[data.productName] = data.productQuantity;
-                      print(items);
-                      return SingleCartItem(
-                        productId: data.productId,
-                        productCategory: data.productCategory,
-                        productImage: data.productImage,
-                        productPrice: data.productPrice,
-                        productQuantity: data.productQuantity,
-                        productName: data.productName,
-                      );
-                    },
-                  ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Text("Sub Total"),
-                  trailing: Text("\₹ $subTotal"),
-                ),
-                ListTile(
-                  leading: Text("Shiping"),
-                  trailing: Text("\₹ $deliveryFee"),
-                ),
-                Divider(
-                  thickness: 2,
-                ),
-                ListTile(
-                  leading: Text("Total"),
-                  trailing: Text("\₹ $totalPrice"),
-                ),
-                cartProvider.getCartList.isEmpty
-                    ? Text("")
-                    : MyButton(
-                        onPressed: () => openCheckout(cartProvider),
-                        text: "Buy",
-                      ),
-              ],
+      body: Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Products",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          )
-        ],
+            Flexible(
+              child: cartProvider.getCartList.isEmpty
+                  ? Center(
+                      child: Text("No Product"),
+                    )
+                  : Card(
+                      child: ListView.builder(
+                          itemCount: cartProvider.getCartList.length,
+                          itemBuilder: (context, index) {
+                            var data = cartProvider.cartList[index];
+                            items[data.productName] = data.productQuantity;
+                            return Container(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(2),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(data.productImage),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${data.productName}",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.currency_rupee,
+                                            size: 12,
+                                          ),
+                                          Text(
+                                            data.productPrice.toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      //implement a counter here
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.remove,
+                                              size: 14,
+                                            ),
+                                            onPressed: () {
+                                              if (quantity > 1) {
+                                                setState(() {
+                                                  quantity--;
+                                                  quantityFuntion(
+                                                      data.productId);
+                                                });
+                                              } else if (quantity == 1) {
+                                                deleteProductFuntion(
+                                                    data.productId);
+                                              } else {
+                                                print("error");
+                                              }
+                                            },
+                                          ),
+                                          Text(
+                                            data.productQuantity.toString(),
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.add,
+                                              size: 14,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                quantity++;
+                                                quantityFuntion(data.productId);
+                                              });
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.currency_rupee,
+                                            size: 12,
+                                          ),
+                                          Text(
+                                            (data.productPrice *
+                                                    data.productQuantity)
+                                                .toString(),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 8.0,
+                  left: 16.0,
+                  top: 16.0,
+                  bottom: 8.0,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Sub Total",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "\₹ $subTotal",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Delivery Fee",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "\₹ $deliveryFee",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      thickness: 2,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Total",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        Text(
+                          "\₹ $totalPrice",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    cartProvider.getCartList.isEmpty
+                        ? Text("")
+                        : MyButton(
+                            onPressed: () => openCheckout(cartProvider),
+                            text: "Place Order",
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:bygrocerry/pages/detailPage/components/second_part.dart';
-import 'package:bygrocerry/pages/detailPage/components/top_part.dart';
 
 class DetailsPage extends StatelessWidget {
   final String productImage;
@@ -28,6 +27,12 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          productName,
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -36,9 +41,6 @@ class DetailsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TopPart(
-              productImage: productImage,
-            ),
             SecondPart(
               productCategory: productCategory,
               productImage: productImage,
@@ -47,7 +49,6 @@ class DetailsPage extends StatelessWidget {
               productName: productName,
               productOldPrice: productOldPrice,
               productPrice: productPrice,
-              productRate: productRate,
             ),
           ],
         ),

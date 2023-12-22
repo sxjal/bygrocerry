@@ -1,8 +1,7 @@
+import 'package:bygrocerry/pages/checkout/check_out_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:bygrocerry/appColors/app_colors.dart';
-import 'package:bygrocerry/pages/cartPage/cart_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/my_button.dart';
 
@@ -10,11 +9,11 @@ class SecondPart extends StatelessWidget {
   final String productName;
   final double productPrice;
   final double productOldPrice;
-  final int productRate;
   final String productDescription;
   final String productId;
   final String productImage;
   final String productCategory;
+
   const SecondPart({
     Key? key,
     required this.productCategory,
@@ -24,113 +23,97 @@ class SecondPart extends StatelessWidget {
     required this.productName,
     required this.productPrice,
     required this.productOldPrice,
-    required this.productRate,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: 2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            productName,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Row(
-            children: [
-              Text("\₹$productPrice"),
-              SizedBox(
-                width: 20,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 250,
+              child: Image.network(
+                productImage,
+                fit: BoxFit.cover,
               ),
-              Text(
-                "\₹$productOldPrice",
+            ),
+            Center(
+              child: Text(
+                productName,
                 style: TextStyle(
-                  decoration: TextDecoration.lineThrough,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          Column(
-            children: [
-              Divider(
-                thickness: 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: AppColors.Kgradient1,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Center(
-                      child: Text(
-                        productRate.toString(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("\₹ $productPrice"),
+                SizedBox(
+                  width: 20,
+                ),
+                productPrice == productOldPrice
+                    ? Text("")
+                    : Text(
+                        "\₹ $productOldPrice",
                         style: TextStyle(
-                          color: AppColors.KwhiteColor,
+                          decoration: TextDecoration.lineThrough,
                         ),
                       ),
-                    ),
-                  ),
-                  Text(
-                    "50 Reviews",
-                    style: TextStyle(
-                      color: AppColors.Kgradient1,
-                    ),
-                  )
-                ],
-              ),
-              Divider(
-                thickness: 2,
-              ),
-            ],
-          ),
-          Text(
-            "Description",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
+              ],
             ),
-          ),
-          Text(
-            productDescription,
-            style: TextStyle(),
-          ),
-          MyButton(
-            onPressed: () {
-              FirebaseFirestore.instance
-                  .collection("cart")
-                  .doc(FirebaseAuth.instance.currentUser!.uid)
-                  .collection("userCart")
-                  .doc(productId)
-                  .set(
-                {
-                  "productId": productId,
-                  "productImage": productImage,
-                  "productName": productName,
-                  "productPrice": productPrice,
-                  "productOldPrice": productPrice,
-                  "productRate": productRate,
-                  "productDescription": productDescription,
-                  "productQuantity": 1,
-                  "productCategory": productCategory,
-                },
-              );
-              RoutingPage.goTonext(
-                context: context,
-                navigateTo: CartPage(),
-              );
-            },
-            text: "Add to Cart",
-          ),
-        ],
+            Column(
+              children: [
+                Divider(
+                  thickness: 2,
+                ),
+              ],
+            ),
+            Text(
+              "Description",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              productDescription,
+              style: TextStyle(),
+            ),
+            MyButton(
+              onPressed: () {
+                FirebaseFirestore.instance
+                    .collection("cart")
+                    .doc(FirebaseAuth.instance.currentUser!.uid)
+                    .collection("userCart")
+                    .doc(productId)
+                    .set(
+                  {
+                    "productId": productId,
+                    "productImage": productImage,
+                    "productName": productName,
+                    "productPrice": productPrice,
+                    "productOldPrice": productPrice,
+                    "productDescription": productDescription,
+                    "productQuantity": 1,
+                    "productCategory": productCategory,
+                  },
+                );
+                RoutingPage.goTonext(
+                  context: context,
+                  navigateTo: CheckOutPage(),
+                );
+              },
+              text: "Add to Cart",
+            ),
+          ],
+        ),
       ),
     );
   }
