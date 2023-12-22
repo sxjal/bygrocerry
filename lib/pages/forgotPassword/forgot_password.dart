@@ -17,26 +17,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    //           TextFormField(
-    //             keyboardType: TextInputType.emailAddress,
-    //             decoration: InputDecoration(hintText: "Email"),
-    //             onChanged: (value) {
-    //               setState(() {
-    //                 email = value.trim();
-    //               });
-    //             },
-    //           ),
-    //           SizedBox(
-    //             height: 20,
-    //           ),
-    //           MyButton(
-    // onPressed:
-    //             text: "Send Request",
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   );
     return Scaffold(
       body: GestureDetector(
         onTap: () {

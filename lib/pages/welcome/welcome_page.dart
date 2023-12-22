@@ -64,6 +64,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   Text(
                     "Your One Stop Shop",
+                    //"A place of Safety and Comfort",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
@@ -89,7 +90,7 @@ class WelcomePage extends StatelessWidget {
                         vertical: 15,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 16, 173, 95),
+                        color: Color.fromARGB(255, 49, 169, 95),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bygrocerry/pages/login/components/login_auth_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:bygrocerry/pages/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -271,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "First time at Heavens Mart?",
+                          "First time at Havens Mart?",
                           style: GoogleFonts.poppins(
                             color: const Color.fromARGB(96, 255, 255, 255),
                           ),

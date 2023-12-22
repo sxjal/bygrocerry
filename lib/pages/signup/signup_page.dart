@@ -15,8 +15,8 @@ class _SignupPageState extends State<SignupPage> {
   TextEditingController fullName = TextEditingController();
   TextEditingController emailAddress = TextEditingController();
   TextEditingController password = TextEditingController();
-
-  bool visibility = true;
+  FocusNode _passwordFocusNode = FocusNode();
+  bool visibility = false;
   @override
   Widget build(BuildContext context) {
     SignupAuthProvider signupAuthProvider =
@@ -159,12 +159,24 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                           TextFormField(
                             controller: password,
+                            focusNode: _passwordFocusNode,
                             autocorrect: false,
-                            obscureText: true,
-                            style: const TextStyle(color: Colors.white),
+                            obscureText: !visibility,
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                             cursorColor:
                                 const Color.fromARGB(255, 197, 197, 197),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
+                              suffixIcon: _passwordFocusNode.hasFocus &&
+                                      password.text.isNotEmpty
+                                  ? Icon(
+                                      visibility
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Color.fromARGB(93, 255, 255, 255),
+                                    )
+                                  : null,
                               label: Text(
                                 "Password",
                                 style: TextStyle(
