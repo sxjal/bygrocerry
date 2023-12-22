@@ -23,96 +23,6 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     SignupAuthProvider signupAuthProvider =
         Provider.of<SignupAuthProvider>(context);
-
-    //   return Scaffold(
-    //     body: SafeArea(
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(20.0),
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //           children: [
-    //             Text(
-    //               "Sign up",
-    //               style: TextStyle(
-    //                 fontSize: 30,
-    //                 fontWeight: FontWeight.bold,
-    //               ),
-    //             ),
-    //             Column(
-    //               children: [
-    //                 TextFormField(
-    //                   controller: fullName,
-    //                   decoration: InputDecoration(
-    //                     hintText: "Full name",
-    //                   ),
-    //                 ),
-    //                 TextFormField(
-    //                   controller: emailAddress,
-    //                   decoration: InputDecoration(
-    //                     hintText: "Email address",
-    //                   ),
-    //                 ),
-    //                 TextFormField(
-    //                   obscureText: visibility,
-    //                   controller: password,
-    //                   decoration: InputDecoration(
-    //                     hintText: "Password",
-    //                     suffixIcon: IconButton(
-    //                       onPressed: () {
-    //                         setState(() {
-    //                           visibility = !visibility;
-    //                         });
-    //                       },
-    //                       icon: Icon(
-    //                         visibility ? Icons.visibility_off : Icons.visibility,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //             Column(
-    //               children: [
-    //                 signupAuthProvider.loading == false
-    //                     ? MyButton(
-    //                         onPressed: () {
-    //                           signupAuthProvider.signupVaidation(
-    //                             fullName: fullName,
-    //                             context: context,
-    //                             emailAdress: emailAddress,
-    //                             password: password,
-    //                           );
-    //                         },
-    //                         text: "SIGN UP",
-    //                       )
-    //                     : Center(
-    //                         child: CircularProgressIndicator(),
-    //                       ),
-    //                 SizedBox(
-    //                   height: 20,
-    //                 ),
-    //                 Row(
-    //                   mainAxisAlignment: MainAxisAlignment.center,
-    //                   children: [
-    //                     Text("Already have an account?\t\t"),
-    //                     GestureDetector(
-    //                       onTap: () {
-    //                         RoutingPage.goTonext(
-    //                           context: context,
-    //                           navigateTo: LoginPage(),
-    //                         );
-    //                       },
-    //                       child: Text("LOGIN"),
-    //                     )
-    //                   ],
-    //                 )
-    //               ],
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   );
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -270,35 +180,48 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.05,
+                    height: MediaQuery.of(context).size.height * 0.03,
                   ),
                   GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width * 0.1),
-                      padding: const EdgeInsets.only(
-                        top: 5,
-                        left: 20,
-                        right: 20,
-                        bottom: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(40),
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("Let me in"),
-                          const Icon(
-                            Icons.arrow_forward_sharp,
-                            color: Color.fromARGB(255, 60, 119, 121),
+                    onTap: () {
+                      signupAuthProvider.signupVaidation(
+                        fullName: fullName,
+                        context: context,
+                        emailAdress: emailAddress,
+                        password: password,
+                      );
+                    },
+                    child: signupAuthProvider.loading == false
+                        ? Container(
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width * 0.1),
+                            padding: const EdgeInsets.only(
+                              top: 5,
+                              left: 20,
+                              right: 20,
+                              bottom: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(40),
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("Let me in"),
+                                const Icon(
+                                  Icons.arrow_forward_sharp,
+                                  color: Color.fromARGB(255, 60, 119, 121),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(
+                            margin: EdgeInsets.only(
+                                right: MediaQuery.of(context).size.width * 0.1),
+                            child: CircularProgressIndicator(),
                           ),
-                        ],
-                      ),
-                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.05,
