@@ -1,3 +1,6 @@
+import 'package:bygrocerry/pages/detailPage/details_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
+import 'package:bygrocerry/widgets/single_product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +16,71 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
   var categoryStream =
       FirebaseFirestore.instance.collection("categories").snapshots();
+
+  var productStream =
+      FirebaseFirestore.instance.collection("products").snapshots();
   //get the length of the stream
+  String query = "";
+  var result;
+  searchFunction(query, searchList) {
+    result = searchList.where((element) {
+      return element["productName"].toUpperCase().contains(query) ||
+          element["productName"].toLowerCase().contains(query) ||
+          element["productName"].toUpperCase().contains(query) &&
+              element["productName"].toLowerCase().contains(query);
+    }).toList();
+    return result;
+  }
+
+  Widget buildProduct(
+      {required Stream<QuerySnapshot<Map<String, dynamic>>>? stream}) {
+    return Container(
+      height: 50,
+      child: StreamBuilder(
+        stream: stream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
+          if (!streamSnapshort.hasData) {
+            return Center(child: const CircularProgressIndicator());
+          }
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            itemCount: streamSnapshort.data!.docs.length,
+            itemBuilder: (ctx, index) {
+              var varData = searchFunction(query, streamSnapshort.data!.docs);
+              var data = varData[index];
+              // var data = streamSnapshort.data!.docs[index];
+              return SingleProduct(
+                onTap: () {
+                  RoutingPage.goTonext(
+                    context: context,
+                    navigateTo: DetailsPage(
+                      productCategory: data["productCategory"],
+                      productId: data["productId"],
+                      productImage: data["productImage"],
+                      productName: data["productName"],
+                      productOldPrice:
+                          (data["productOldPrice"] as num).toDouble(),
+                      productPrice: (data["productPrice"] as num).toDouble(),
+                      productRate: data["productRate"],
+                      productDescription: data["productDescription"],
+                    ),
+                  );
+                },
+                productId: data["productId"],
+                productCategory: data["productCategory"],
+                productRate: data["productRate"],
+                productOldPrice: data["productOldPrice"],
+                productPrice: data["productPrice"],
+                productImage: data["productImage"],
+                productName: data["productName"],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,18 +144,27 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               tabs: tabs,
             ),
             body: TabBarView(
-              children: tabs.map(
-                (tab) {
-                  return Center(
-                    child: Text(
-                      tab.child.toString(),
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  );
-                },
-              ).toList(),
+              children:
+                  // tabs.map(
+                  //   (tab) {
+                  //     return Center(
+                  //       child: Text(
+                  //         tab.child.toString(),
+                  //         style: TextStyle(
+                  //           color: Colors.black,
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // ).toList(),
+                  [
+                Center(
+                  child: Text("All products"),
+                ),
+                Center(
+                  child: Text("Best Sells"),
+                ),
+              ],
             ),
           ),
         );
