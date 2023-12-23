@@ -1,7 +1,7 @@
+import 'package:bygrocerry/pages/home/home.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:bygrocerry/pages/home/home.dart';
 import 'package:bygrocerry/pages/login/components/login_auth_provider.dart';
 import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/pages/provider/favorite_provider.dart';
