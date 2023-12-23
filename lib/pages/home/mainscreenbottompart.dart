@@ -41,9 +41,6 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                   Tab(
                     child: Text(
                       doc["categoryName"].toString(),
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
                     ),
                   ));
             })
