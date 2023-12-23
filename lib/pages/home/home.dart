@@ -1,12 +1,6 @@
 import 'package:bygrocerry/pages/cartPage/cart_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:bygrocerry/appColors/app_colors.dart';
-// import 'package:bygrocerry/pages/detailPage/details_page.dart';
-// import 'package:bygrocerry/route/routing_page.dart';
-// import 'package:bygrocerry/widgets/build_drawer.dart';
-// import 'package:bygrocerry/widgets/grid_view_widget.dart';
-// import 'package:bygrocerry/widgets/single_product.dart';
 import 'package:bygrocerry/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
