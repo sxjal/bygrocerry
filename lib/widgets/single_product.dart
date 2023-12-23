@@ -49,7 +49,7 @@ class _SingleProductState extends State<SingleProduct> {
 
     FirebaseFirestore.instance
         .collection("favorite")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .doc(FirebaseAuth.instance.currentUser?.uid)
         .collection("userFavorite")
         .doc(widget.productId)
         .get()

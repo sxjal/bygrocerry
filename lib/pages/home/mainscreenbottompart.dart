@@ -47,9 +47,9 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
             physics: BouncingScrollPhysics(),
             itemCount: streamSnapshort.data!.docs.length,
             itemBuilder: (ctx, index) {
-              var varData = searchFunction(query, streamSnapshort.data!.docs);
+              var varData = searchFunction(query, streamSnapshort.data?.docs);
               var data = varData[index];
-              // var data = streamSnapshort.data!.docs[index];
+              // data = streamSnapshort.data!.docs[index];
               return SingleProduct(
                 onTap: () {
                   RoutingPage.goTonext(
@@ -95,11 +95,6 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
           return CircularProgressIndicator();
         }
 
-        // final tabs = snapshot.data!.docs.map((doc) {
-        //   return Tab(
-        //     text: doc["categoryName"].toString(),
-        //   );
-        // }).toList();
         final tabs = snapshot.data!.docs
             .asMap()
             .map((index, doc) {
@@ -113,7 +108,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
             })
             .values
             .toList();
-        final othertabs = [
+        var othertabs = [
           Tab(
             text: "All products",
           ),
@@ -123,6 +118,22 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         ];
 
         tabs.insertAll(0, othertabs);
+        print(snapshot.data!.docs);
+        final categoriesSpecific = snapshot.data!.docs
+            .asMap()
+            .map((index, doc) {
+              return MapEntry(
+                index,
+                Text(
+                  doc["categoryName"].toString(),
+                ),
+              );
+            })
+            .values
+            .toList();
+
+        var othetabs = [Text("BestSells"), Text("All Products")];
+        categoriesSpecific.insertAll(0, othetabs);
 
         return DefaultTabController(
           length: tabs.length,
@@ -144,27 +155,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               tabs: tabs,
             ),
             body: TabBarView(
-              children:
-                  // tabs.map(
-                  //   (tab) {
-                  //     return Center(
-                  //       child: Text(
-                  //         tab.child.toString(),
-                  //         style: TextStyle(
-                  //           color: Colors.black,
-                  //         ),
-                  //       ),
-                  //     );
-                  //   },
-                  // ).toList(),
-                  [
-                Center(
-                  child: Text("All products"),
-                ),
-                Center(
-                  child: Text("Best Sells"),
-                ),
-              ],
+              children: categoriesSpecific,
             ),
           ),
         );
