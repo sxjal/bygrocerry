@@ -1,7 +1,4 @@
 import 'package:bygrocerry/pages/cartPage/cart_page.dart';
-import 'package:bygrocerry/pages/detailPage/details_page.dart';
-import 'package:bygrocerry/pages/profile/profile_page.dart';
-import 'package:bygrocerry/pages/welcome/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:bygrocerry/appColors/app_colors.dart';
