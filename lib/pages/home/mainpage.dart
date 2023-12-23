@@ -1,9 +1,9 @@
+import 'package:bygrocerry/model/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required UserModel user}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -22,19 +22,6 @@ class _HomePageState extends State<HomePage> {
               element["productName"].toLowerCase().contains(query);
     }).toList();
     return result;
-  }
-
-  Future<String> getUserName(String userId) async {
-    final DocumentSnapshot doc =
-        await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-    if (doc.exists) {
-      print((doc.data() as Map<String, dynamic>)['fullName'].toString());
-      return (doc.data() as Map<String, dynamic>)['fullName'];
-      // Replace 'name' with the field name in your Firestore
-    } else {
-      throw Exception('User does not exist');
-    }
   }
 
   @override
@@ -82,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            getUserName(currentUser!.uid).toString(),
+                            "sajal", //widget.user.fullName,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
