@@ -1,7 +1,10 @@
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
+import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
+import 'package:bygrocerry/widgets/grid_view_widget.dart';
 import 'package:bygrocerry/widgets/single_product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenBottomPart extends StatefulWidget {
@@ -32,48 +35,39 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     return result;
   }
 
-  Widget buildProduct(
-      {required Stream<QuerySnapshot<Map<String, dynamic>>>? stream}) {
+  Widget buildCategory(categoryName) {
+    print("categoryName $categoryName");
     return Container(
-      height: 50,
+      height: MediaQuery.of(context).size.height,
       child: StreamBuilder(
-        stream: stream,
+        stream: FirebaseFirestore.instance.collection("categories").snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
           if (!streamSnapshort.hasData) {
             return Center(child: const CircularProgressIndicator());
           }
+          print("inside streambuilder");
+          print(
+              "streamSnapshort.data!.docs.length ${streamSnapshort.data!.docs.length}");
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             itemCount: streamSnapshort.data!.docs.length,
             itemBuilder: (ctx, index) {
-              var varData = searchFunction(query, streamSnapshort.data?.docs);
-              var data = varData[index];
-              // data = streamSnapshort.data!.docs[index];
-              return SingleProduct(
+              return Categories(
                 onTap: () {
-                  RoutingPage.goTonext(
-                    context: context,
-                    navigateTo: DetailsPage(
-                      productCategory: data["productCategory"],
-                      productId: data["productId"],
-                      productImage: data["productImage"],
-                      productName: data["productName"],
-                      productOldPrice:
-                          (data["productOldPrice"] as num).toDouble(),
-                      productPrice: (data["productPrice"] as num).toDouble(),
-                      productRate: data["productRate"],
-                      productDescription: data["productDescription"],
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => GridViewWidget(
+                        subCollection: streamSnapshort.data!.docs[index]
+                            [categoryName],
+                        collection: "categories",
+                        id: streamSnapshort.data!.docs[index].id,
+                      ),
                     ),
                   );
                 },
-                productId: data["productId"],
-                productCategory: data["productCategory"],
-                productRate: data["productRate"],
-                productOldPrice: data["productOldPrice"],
-                productPrice: data["productPrice"],
-                productImage: data["productImage"],
-                productName: data["productName"],
+                categoryName: streamSnapshort.data!.docs[index][categoryName],
+                image: streamSnapshort.data!.docs[index]["categoryImage"],
               );
             },
           );
@@ -118,13 +112,13 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         ];
 
         tabs.insertAll(0, othertabs);
-        print(snapshot.data!.docs);
+
         final categoriesSpecific = snapshot.data!.docs
             .asMap()
             .map((index, doc) {
               return MapEntry(
                 index,
-                Text(
+                buildCategory(
                   doc["categoryName"].toString(),
                 ),
               );

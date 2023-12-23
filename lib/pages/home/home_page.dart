@@ -53,16 +53,6 @@ class _HomePageState extends State<HomePage> {
   Widget buildCategory() {
     return Column(
       children: [
-        ListTile(
-          leading: Text(
-            "Categories",
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ),
         Container(
           height: size!.height * 0.1 + 20,
           child: StreamBuilder(
@@ -295,7 +285,7 @@ class Categories extends StatelessWidget {
   final String image;
   final String categoryName;
   final Function()? onTap;
-const Categories({
+  const Categories({
     Key? key,
     required this.onTap,
     required this.categoryName,
