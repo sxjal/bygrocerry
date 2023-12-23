@@ -48,6 +48,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         return DefaultTabController(
           length: tabs.length + 2,
           child: Scaffold(
+            backgroundColor: Colors.white,
             appBar: TabBar(
               onTap: (index) {
                 setState(() {
@@ -57,12 +58,12 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               isScrollable: true,
               indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(
-                  color: Colors.white,
-                  width: 4.0,
+                  color: Color.fromRGBO(33, 160, 86, 1),
+                  width: 2.0,
                 ),
               ),
-              labelColor: const Color.fromARGB(
-                  255, 134, 22, 22), // This is the color of the selected tab
+              labelColor: Color.fromRGBO(
+                  33, 160, 86, 1), // This is the color of the selected tab
               unselectedLabelColor: const Color.fromARGB(
                   255, 0, 0, 0), // This is the color of the unselected tab
 
