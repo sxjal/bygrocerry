@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required UserModel user}) : super(key: key);
+  const HomePage({
+    Key? key,
+    required this.user, // Add this line to define the 'user' field
+  }) : super(key: key);
+
+  final UserModel user; // Add this line to define the 'user' field
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -69,12 +74,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Text(
-                            "sajal", //widget.user.fullName,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 82, 82, 82),
-                            ),
+                            widget.user.fullName,
                           ),
                         ],
                       ),
