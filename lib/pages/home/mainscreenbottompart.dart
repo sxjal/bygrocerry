@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenBottomPart extends StatefulWidget {
@@ -29,7 +28,19 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         }
 
         final tabs = snapshot.data!.docs.map((doc) {
-          return Tab(text: doc['categoryName']);
+          return Tab(
+            child: Container(
+              height: 20,
+              width: 40,
+              color: Colors.black,
+              child: Text(
+                doc["categoryName"].toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
         }).toList();
 
         return DefaultTabController(
@@ -49,7 +60,10 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                 (tab) {
                   return Center(
                     child: Text(
-                      tab.text.toString(),
+                      tab.child.toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
                     ),
                   );
                 },
