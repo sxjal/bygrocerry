@@ -116,11 +116,16 @@ class _HomePageState extends State<HomePage> {
                           width: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            image: DecorationImage(
-                              image: NetworkImage(widget.user.imageurl),
-                              fit: BoxFit.fill,
-                            ),
                           ),
+                          child: widget.user.imageurl == ""
+                              ? Image(
+                                  image: AssetImage('images/user.png'),
+                                  fit: BoxFit.cover,
+                                )
+                              : Image(
+                                  image: NetworkImage(widget.user.imageurl),
+                                  fit: CircleBorder(),
+                                ),
                         ),
                       ),
                     ],
