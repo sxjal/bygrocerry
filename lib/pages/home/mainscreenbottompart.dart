@@ -34,8 +34,8 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     print("categoryName $categoryName");
     return Expanded(
       child: Container(
-        // width: 300,
-        // height: 500, //MediaQuery.of(context).size.height,
+        width: 300,
+        height: 500, //MediaQuery.of(context).size.height,
         child: StreamBuilder(
           stream:
               FirebaseFirestore.instance.collection("categories").snapshots(),

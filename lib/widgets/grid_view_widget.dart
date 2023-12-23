@@ -36,37 +36,43 @@ class _GridViewWidgetState extends State<GridViewWidget> {
           );
         }
 
-        return Expanded(
-          child: ListView.builder(
-            // shrinkWrap: true,
-            itemCount: snapshort.data!.docs.length,
-            itemBuilder: (ctx, index) {
-              var data = snapshort.data!.docs[index];
-              return SingleProduct(
-                onTap: () {
-                  RoutingPage.goTonext(
-                    context: context,
-                    navigateTo: DetailsPage(
-                      productCategory: data["productCategory"],
-                      productId: data["productId"],
-                      productImage: data["productImage"],
-                      productName: data["productName"],
-                      productOldPrice: data["productOldPrice"],
-                      productPrice: data["productPrice"],
-                      productRate: data["productRate"],
-                      productDescription: data["productDescription"],
-                    ),
-                  );
-                },
-                productId: data["productId"],
-                productCategory: data["productCategory"],
-                productRate: data["productRate"],
-                productOldPrice: data["productOldPrice"],
-                productPrice: data["productPrice"],
-                productImage: data["productImage"],
-                productName: data["productName"],
-              );
-            },
+        print("before listview");
+
+        return SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              // shrinkWrap: true,
+              itemCount: snapshort.data!.docs.length,
+              itemBuilder: (ctx, index) {
+                print("inside listview");
+                var data = snapshort.data!.docs[index];
+                return SingleProduct(
+                  onTap: () {
+                    RoutingPage.goTonext(
+                      context: context,
+                      navigateTo: DetailsPage(
+                        productCategory: data["productCategory"],
+                        productId: data["productId"],
+                        productImage: data["productImage"],
+                        productName: data["productName"],
+                        productOldPrice: data["productOldPrice"],
+                        productPrice: data["productPrice"],
+                        productRate: data["productRate"],
+                        productDescription: data["productDescription"],
+                      ),
+                    );
+                  },
+                  productId: data["productId"],
+                  productCategory: data["productCategory"],
+                  productRate: data["productRate"],
+                  productOldPrice: data["productOldPrice"],
+                  productPrice: data["productPrice"],
+                  productImage: data["productImage"],
+                  productName: data["productName"],
+                );
+              },
+            ),
           ),
         );
       },
