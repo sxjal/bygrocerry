@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   String query = "";
   var result;
 
-  
   searchFunction(query, searchList) {
     result = searchList.where((element) {
       return element["productName"].toUpperCase().contains(query) ||

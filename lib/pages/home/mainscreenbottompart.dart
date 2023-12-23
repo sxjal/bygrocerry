@@ -10,6 +10,7 @@ class MainScreenBottomPart extends StatefulWidget {
 
 class MainScreenBottomPartState extends State<MainScreenBottomPart> {
   var selectedTab = 0;
+
   var categoryStream =
       FirebaseFirestore.instance.collection("categories").snapshots();
   //get the length of the stream
@@ -29,22 +30,23 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
         final tabs = snapshot.data!.docs.map((doc) {
           return Tab(
-            child: Container(
-              height: 20,
-              width: 40,
-              color: Colors.black,
-              child: Text(
-                doc["categoryName"].toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            text: doc["categoryName"].toString(),
           );
         }).toList();
 
+        final othertabs = [
+          Tab(
+            text: "All products",
+          ),
+          Tab(
+            text: "Best Sells",
+          ),
+        ];
+
+        tabs.insertAll(0, othertabs);
+
         return DefaultTabController(
-          length: tabs.length,
+          length: tabs.length + 2,
           child: Scaffold(
             appBar: TabBar(
               onTap: (index) {
@@ -53,6 +55,17 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                 });
               },
               isScrollable: true,
+              indicator: UnderlineTabIndicator(
+                borderSide: BorderSide(
+                  color: Colors.white,
+                  width: 4.0,
+                ),
+              ),
+              labelColor: const Color.fromARGB(
+                  255, 134, 22, 22), // This is the color of the selected tab
+              unselectedLabelColor: const Color.fromARGB(
+                  255, 0, 0, 0), // This is the color of the unselected tab
+
               tabs: tabs,
             ),
             body: TabBarView(
