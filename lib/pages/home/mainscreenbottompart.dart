@@ -28,12 +28,27 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
           return CircularProgressIndicator();
         }
 
-        final tabs = snapshot.data!.docs.map((doc) {
-          return Tab(
-            text: doc["categoryName"].toString(),
-          );
-        }).toList();
-
+        // final tabs = snapshot.data!.docs.map((doc) {
+        //   return Tab(
+        //     text: doc["categoryName"].toString(),
+        //   );
+        // }).toList();
+        final tabs = snapshot.data!.docs
+            .asMap()
+            .map((index, doc) {
+              return MapEntry(
+                  index,
+                  Tab(
+                    child: Text(
+                      doc["categoryName"].toString(),
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ));
+            })
+            .values
+            .toList();
         final othertabs = [
           Tab(
             text: "All products",
@@ -46,15 +61,10 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         tabs.insertAll(0, othertabs);
 
         return DefaultTabController(
-          length: tabs.length + 2,
+          length: tabs.length,
           child: Scaffold(
             backgroundColor: Colors.white,
             appBar: TabBar(
-              onTap: (index) {
-                setState(() {
-                  selectedTab = index;
-                });
-              },
               isScrollable: true,
               indicator: UnderlineTabIndicator(
                 borderSide: BorderSide(

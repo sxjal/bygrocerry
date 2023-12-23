@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * .08,
+                  top: MediaQuery.of(context).size.height * .07,
                   left: MediaQuery.of(context).size.width * .08,
                   right: MediaQuery.of(context).size.width * .08,
                 ),
@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,8 +110,6 @@ class _HomePageState extends State<HomePage> {
                         Spacer(),
                         GestureDetector(
                           onTap: () {
-                            print("clicked");
-                            //push to profile page
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ProfilePage(),
@@ -137,10 +136,10 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * .02,
+                      height: MediaQuery.of(context).size.height * .03,
                     ),
                     Container(
-                      height: 45,
+                      height: 40,
                       child: TextFormField(
                         onChanged: (value) {
                           setState(() {
@@ -171,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height * .30,
+                top: MediaQuery.of(context).size.height * .3,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
@@ -182,16 +181,18 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * .02,
+                        height: MediaQuery.of(context).size.height * .03,
                       ),
-                      Text("check"),
                       query == ""
-                          ? Container(
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              child: MainScreenBottomPart(),
+                          ? Expanded(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
+                                child: MainScreenBottomPart(),
+                              ),
                             )
                           : Text("Search Results for $query"),
                     ],
