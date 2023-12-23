@@ -50,16 +50,16 @@ class _HomePageState extends State<HomePage> {
               height: MediaQuery.of(context).size.height * .35,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                // image: DecorationImage(
-                //   opacity: 0.5,
-                //   image: AssetImage(
-                //     "images/bgpattern.png",
-                //   ),
-                //   fit: BoxFit.cover,
-                // ),
-                // borderRadius: BorderRadius.only(
-                //   bottomLeft: Radius.circular(20),
-                // ),
+                image: DecorationImage(
+                  opacity: .1,
+                  image: AssetImage(
+                    "images/bgpattern.png",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                ),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -104,6 +104,7 @@ class _HomePageState extends State<HomePage> {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
+                          print("clicked");
                           //push to profile page
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -112,8 +113,8 @@ class _HomePageState extends State<HomePage> {
                           );
                         },
                         child: Container(
-                          height: 80,
-                          width: 80,
+                          height: MediaQuery.of(context).size.height * .1,
+                          width: MediaQuery.of(context).size.height * .1,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             image: widget.user.imageurl == "notset"
