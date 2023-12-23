@@ -184,6 +184,7 @@ class SignupAuthProvider with ChangeNotifier {
             "emailAdress": emailAdress.text,
             "password": password.text,
             "userUid": userCredential!.user!.uid,
+            "imageurl": "notset",
           },
         ).then((value) {
           loading = false;

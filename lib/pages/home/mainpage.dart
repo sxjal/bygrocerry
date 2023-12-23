@@ -116,16 +116,16 @@ class _HomePageState extends State<HomePage> {
                           width: 80,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
+                            image: widget.user.imageurl == "notset"
+                                ? DecorationImage(
+                                    image: AssetImage("images/user.png"),
+                                    fit: BoxFit.cover,
+                                  )
+                                : DecorationImage(
+                                    image: NetworkImage(widget.user.imageurl),
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
-                          child: widget.user.imageurl == ""
-                              ? Image(
-                                  image: AssetImage('images/user.png'),
-                                  fit: BoxFit.cover,
-                                )
-                              : Image(
-                                  image: NetworkImage(widget.user.imageurl),
-                                  fit: CircleBorder(),
-                                ),
                         ),
                       ),
                     ],
