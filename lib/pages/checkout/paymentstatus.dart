@@ -1,5 +1,5 @@
 import 'package:bygrocerry/pages/checkout/check_out_page.dart';
-import 'package:bygrocerry/pages/home/order/orders.dart';
+import 'package:bygrocerry/pages/order/orders.dart';
 import 'package:flutter/material.dart';
 
 class PaymentStatusPage extends StatefulWidget {

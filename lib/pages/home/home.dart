@@ -132,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         children: [
           HomePage(user: userModel),
-          Center(child: Text('Style')),
-          Center(child: Text('Orders')),
+          Center(child: Text('Favorites')),
+          Center(child: Text('Order history')),
         ],
       ),
     );
