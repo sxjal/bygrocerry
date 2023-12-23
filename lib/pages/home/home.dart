@@ -25,7 +25,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  UserModel userModel = UserModel(fullName: "", emailAddress: "", userUid: "");
+  UserModel userModel =
+      UserModel(fullName: "", emailAddress: "", userUid: "", imageurl: "");
   Future getCurrentUserDataFunction() async {
     await FirebaseFirestore.instance
         .collection("users")

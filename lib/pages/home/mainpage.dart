@@ -1,6 +1,8 @@
 import 'package:bygrocerry/model/user_model.dart';
+import 'package:bygrocerry/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -40,9 +42,13 @@ class _HomePageState extends State<HomePage> {
           // fit: StackFit.passthrough,
           children: [
             Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * .08,
+                left: MediaQuery.of(context).size.width * .08,
+                right: MediaQuery.of(context).size.width * .08,
+              ),
               height: MediaQuery.of(context).size.height * .35,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 // image: DecorationImage(
                 //   opacity: 0.5,
@@ -54,33 +60,68 @@ class _HomePageState extends State<HomePage> {
                 // borderRadius: BorderRadius.only(
                 //   bottomLeft: Radius.circular(20),
                 // ),
-                color: Color.fromRGBO(53, 184, 108, 1),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromRGBO(33, 160, 86, 1),
+                    Color.fromRGBO(64, 190, 117, 1)
+                  ],
+                ),
               ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Welcome Back",
-                            style: TextStyle(
+                            "Welcome,",
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.montserrat(
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 82, 82, 82),
+                              fontWeight: FontWeight.w800,
+                              color: Color.fromARGB(255, 225, 225, 225),
                             ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .01,
                           ),
                           Text(
                             widget.user.fullName,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 255, 255, 255),
+                            ),
                           ),
                         ],
                       ),
                       Spacer(),
-                      Container(
-                        child: Text("photo"),
+                      GestureDetector(
+                        onTap: () {
+                          //push to profile page
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.user.imageurl),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
