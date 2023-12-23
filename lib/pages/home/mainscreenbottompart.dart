@@ -1,10 +1,5 @@
-import 'package:bygrocerry/pages/detailPage/details_page.dart';
-import 'package:bygrocerry/pages/home/home_page.dart';
-import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/grid_view_widget.dart';
-import 'package:bygrocerry/widgets/single_product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainScreenBottomPart extends StatefulWidget {
