@@ -21,18 +21,6 @@ class GridViewWidget extends StatefulWidget {
 }
 
 class _GridViewWidgetState extends State<GridViewWidget> {
-  String query = "";
-  var result;
-  searchFunction(query, searchList) {
-    result = searchList.where((element) {
-      return element["productName"].toUpperCase().contains(query) ||
-          element["productName"].toLowerCase().contains(query) ||
-          element["productName"].toUpperCase().contains(query) &&
-              element["productName"].toLowerCase().contains(query);
-    }).toList();
-    return result;
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -47,18 +35,12 @@ class _GridViewWidgetState extends State<GridViewWidget> {
             child: CircularProgressIndicator(),
           );
         }
-        var varData = searchFunction(query, snapshort.data!.docs);
-        return GridView.builder(
-          shrinkWrap: true,
-          itemCount: result.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 5.0,
-            mainAxisSpacing: 5.0,
-            childAspectRatio: 0.6,
-          ),
+
+        return ListView.builder(
+          // shrinkWrap: true,
+          itemCount: snapshort.data!.docs.length,
           itemBuilder: (ctx, index) {
-            var data = varData[index];
+            var data = snapshort.data!.docs[index];
             return SingleProduct(
               onTap: () {
                 RoutingPage.goTonext(
