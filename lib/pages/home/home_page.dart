@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     categoryName: streamSnapshort.data!.docs[index]
                         ["categoryName"],
-                    image: streamSnapshort.data!.docs[index]["categoryImage"],
+                    //   image: streamSnapshort.data!.docs[index]["categoryImage"],
                   );
                 },
               );
@@ -282,14 +282,14 @@ class _HomePageState extends State<HomePage> {
 }
 
 class Categories extends StatelessWidget {
-  final String image;
+  // final String image;
   final String categoryName;
   final Function()? onTap;
   const Categories({
     Key? key,
     required this.onTap,
     required this.categoryName,
-    required this.image,
+    // required this.image,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -299,12 +299,12 @@ class Categories extends StatelessWidget {
         margin: EdgeInsets.all(12.0),
         width: size!.width / 2 - 20,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              image,
-            ),
-          ),
+          // image: DecorationImage(
+          //   fit: BoxFit.cover,
+          //   image: NetworkImage(
+          //     image,
+          //   ),
+          // ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(

@@ -37,41 +37,34 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
   Widget buildCategory(categoryName) {
     print("categoryName $categoryName");
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      child: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("categories").snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
-          if (!streamSnapshort.hasData) {
-            return Center(child: const CircularProgressIndicator());
-          }
-          print("inside streambuilder");
-          print(
-              "streamSnapshort.data!.docs.length ${streamSnapshort.data!.docs.length}");
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            itemCount: streamSnapshort.data!.docs.length,
-            itemBuilder: (ctx, index) {
-              return Categories(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => GridViewWidget(
-                        subCollection: streamSnapshort.data!.docs[index]
-                            [categoryName],
-                        collection: "categories",
-                        id: streamSnapshort.data!.docs[index].id,
-                      ),
-                    ),
-                  );
-                },
-                categoryName: streamSnapshort.data!.docs[index][categoryName],
-                image: streamSnapshort.data!.docs[index]["categoryImage"],
-              );
-            },
-          );
-        },
+    return Expanded(
+      child: Container(
+        width: 300,
+        height: 500, //MediaQuery.of(context).size.height,
+        child: StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection("categories").snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
+            if (!streamSnapshort.hasData) {
+              return Center(child: const CircularProgressIndicator());
+            }
+            print("inside streambuilder");
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              physics: BouncingScrollPhysics(),
+              itemCount: streamSnapshort.data!.docs.length,
+              itemBuilder: (ctx, index) {
+                print("prinintg streamsnapshot categoryname");
+                print(categoryName);
+                return GridViewWidget(
+                  subCollection: categoryName,
+                  collection: "categories",
+                  id: streamSnapshort.data!.docs[index].id,
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
