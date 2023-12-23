@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   String query = "";
   var result;
 
+  
   searchFunction(query, searchList) {
     result = searchList.where((element) {
       return element["productName"].toUpperCase().contains(query) ||
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 174, 87, 87),
+                    color: Color.fromARGB(255, 255, 255, 255),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                     ),
@@ -188,7 +189,11 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text("check"),
                       query == ""
-                          ? MainScreenBottomPart()
+                          ? Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: MainScreenBottomPart(),
+                            )
                           : Text("Search Results for $query"),
                     ],
                   ),
