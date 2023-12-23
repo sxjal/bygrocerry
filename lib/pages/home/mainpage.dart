@@ -1,4 +1,5 @@
 import 'package:bygrocerry/model/user_model.dart';
+import 'package:bygrocerry/pages/home/mainscreenbottompart.dart';
 import 'package:bygrocerry/pages/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -180,7 +181,17 @@ class _HomePageState extends State<HomePage> {
                       topLeft: Radius.circular(25),
                     ),
                   ),
-                  //child: Text("photo"),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .02,
+                      ),
+                      Text("check"),
+                      query == ""
+                          ? MainScreenBottomPart()
+                          : Text("Search Results for $query"),
+                    ],
+                  ),
                 ),
               ),
             ],

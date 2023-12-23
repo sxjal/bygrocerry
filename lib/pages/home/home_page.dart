@@ -295,7 +295,7 @@ class Categories extends StatelessWidget {
   final String image;
   final String categoryName;
   final Function()? onTap;
-  const Categories({
+const Categories({
     Key? key,
     required this.onTap,
     required this.categoryName,
