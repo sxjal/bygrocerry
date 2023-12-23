@@ -32,6 +32,16 @@ class _HomePageState extends State<HomePage> {
     return result;
   }
 
+  NetworkImage buildImage(imageUrl) {
+    final Uri? uri = Uri.tryParse(imageUrl);
+
+    if (uri == null || !uri.hasScheme) {
+      return NetworkImage("images/user.png");
+    }
+
+    return NetworkImage(imageUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +137,8 @@ class _HomePageState extends State<HomePage> {
                                       fit: BoxFit.cover,
                                     )
                                   : DecorationImage(
-                                      image: NetworkImage(widget.user.imageurl),
+                                      image: buildImage(widget.user
+                                          .imageurl), // NetworkImage(widget.user.imageurl),
                                       fit: BoxFit.cover,
                                     ),
                             ),

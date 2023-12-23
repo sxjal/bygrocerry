@@ -45,28 +45,29 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
+    print("inside singleproduct");
     FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
 
-    FirebaseFirestore.instance
-        .collection("favorite")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("userFavorite")
-        .doc(widget.productId)
-        .get()
-        .then(
-          (value) => {
-            if (this.mounted)
-              {
-                if (value.exists)
-                  {
-                    setState(() {
-                      isFavorite = value.get("productFavorite");
-                    }),
-                  }
-              }
-          },
-        );
-
+    // FirebaseFirestore.instance
+    //     .collection("favorite")
+    //     .doc(FirebaseAuth.instance.currentUser?.uid)
+    //     .collection("userFavorite")
+    //     .doc(widget.productId)
+    //     .get()
+    //     .then(
+    //       (value) => {
+    //         if (this.mounted)
+    //           {
+    //             if (value.exists)
+    //               {
+    //                 setState(() {
+    //                   isFavorite = value.get("productFavorite");
+    //                 }),
+    //               }
+    //           }
+    //       },
+    //     );
+     
     return GestureDetector(
       onTap: widget.onTap,
       child: Column(
@@ -74,8 +75,8 @@ class _SingleProductState extends State<SingleProduct> {
           Container(
             margin: EdgeInsets.all(12.0),
             alignment: Alignment.topRight,
-            height: size!.height * 0.3,
-            width: size!.width / 2 - 20,
+            height: MediaQuery.of(context).size.height * .2,
+            width: MediaQuery.of(context).size.width * .2,
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -89,7 +90,7 @@ class _SingleProductState extends State<SingleProduct> {
               onPressed: () {
                 setState(
                   () {
-                    isFavorite = !isFavorite;
+                    //  isFavorite = !isFavorite;
 
                     if (isFavorite == true) {
                       favoriteProvider.favorite(

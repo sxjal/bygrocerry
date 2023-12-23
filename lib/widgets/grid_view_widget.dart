@@ -47,6 +47,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
               itemBuilder: (ctx, index) {
                 print("inside listview");
                 var data = snapshort.data!.docs[index];
+                print("dataworks");
                 return SingleProduct(
                   onTap: () {
                     RoutingPage.goTonext(
