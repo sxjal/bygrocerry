@@ -118,41 +118,8 @@ class _SingleProductState extends State<SingleProduct> {
           children: [
             //contains the image
 
-            Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * .20,
-                  height: MediaQuery.of(context).size.width * .20,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(widget.productImage),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                Positioned(
-                  top: MediaQuery.of(context).size.width * .18,
-                  left: (MediaQuery.of(context).size.width * .18) / 2,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * .05,
-                    height: MediaQuery.of(context).size.width * .05,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(64, 175, 110, 1),
-                      //borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
             SizedBox(
-              width: MediaQuery.of(context).size.width * .05,
+              width: MediaQuery.of(context).size.width * .01,
             ),
             //contains the name, category and price
             Expanded(
@@ -179,7 +146,7 @@ class _SingleProductState extends State<SingleProduct> {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         "\₹ ${widget.productPrice}",
@@ -188,6 +155,7 @@ class _SingleProductState extends State<SingleProduct> {
                             fontSize: 16,
                             color: Color.fromRGBO(64, 175, 110, 1)),
                       ),
+                      Spacer(),
                       widget.productOldPrice != widget.productPrice
                           ? Text(
                               "\₹ ${widget.productOldPrice}   ",
@@ -278,6 +246,38 @@ class _SingleProductState extends State<SingleProduct> {
                   child: Icon(
                     Icons.favorite_border,
                     color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * .20,
+                  height: MediaQuery.of(context).size.width * .20,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(widget.productImage),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).size.width * .18,
+                  left: (MediaQuery.of(context).size.width * .18) / 2,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .05,
+                    height: MediaQuery.of(context).size.width * .05,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(64, 175, 110, 1),
+                      //borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.star,
+                      color: Colors.white,
+                      size: 10,
+                    ),
                   ),
                 ),
               ],
