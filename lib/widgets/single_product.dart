@@ -170,53 +170,54 @@ class _SingleProductState extends State<SingleProduct> {
                         : Text(""),
                   ],
                 ),
-                // Text(
-                //   "nothing new just testing things onothing new just testing things onothing new just testing things onothing new just testing things out hahahahahshshhshahahahahahaasdasdsadsfdas", // widget.productDescription,
-                //   maxLines: 2,
-                //   softWrap: true,
-                //   overflow: TextOverflow.ellipsis,
-                //   style: GoogleFonts.poppins(
-                //     fontWeight: FontWeight.w400,
-                //     fontSize: 10,
-                //   ),
+                Text(
+                  widget
+                      .productDescription, //   "nothing new just testing things onothing new just testing things onothing new just testing things onothing new just testing things out hahahahahshshhshahahahahahaasdasdsadsfdas", // widget.productDescription,
+                  maxLines: 10,
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 10,
+                  ),
+                ),
+                // LayoutBuilder(
+                //   builder: (BuildContext context, BoxConstraints constraints) {
+                //     final span = TextSpan(
+                //       text:
+                //           "hahabsdkjasbdfjhawebfjhebwrhfjkaberfhjberosadsadsadsfuhberouyfberuyfberuoyfberuoyfberyuofberouyfberuybf", // widget.productDescription,
+                //       style: GoogleFonts.poppins(
+                //         fontWeight: FontWeight.w400,
+                //         fontSize: 10,
+                //       ),
+                //     );
+                //     final tp = TextPainter(
+                //       text: span,
+                //       textDirection: TextDirection.ltr,
+                //       maxLines: 2,
+                //     );
+                //     tp.layout(maxWidth: constraints.maxWidth);
+
+                //     if (tp.didExceedMaxLines) {
+                //       // The text is overflowing
+                //       overflowing = true;
+                //     } else {
+                //       // The text is not overflowing
+                //       overflowing = false;
+                //     }
+
+                //     return Text.rich(
+                //       span,
+                //       maxLines: overflowing && readmore ? 10 : 2,
+                //       softWrap: true,
+                //       overflow: TextOverflow.ellipsis,
+                //     );
+                //   },
                 // ),
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    final span = TextSpan(
-                      text:
-                          "hahabsdkjasbdfjhawebfjhebwrhfjkaberfhjberosadsadsadsfuhberouyfberuyfberuoyfberuoyfberyuofberouyfberuybf", // widget.productDescription,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                      ),
-                    );
-                    final tp = TextPainter(
-                      text: span,
-                      textDirection: TextDirection.ltr,
-                      maxLines: 2,
-                    );
-                    tp.layout(maxWidth: constraints.maxWidth);
-
-                    if (tp.didExceedMaxLines) {
-                      // The text is overflowing
-                      overflowing = true;
-                    } else {
-                      // The text is not overflowing
-                      overflowing = false;
-                    }
-
-                    return Text.rich(
-                      span,
-                      maxLines: overflowing && readmore ? 10 : 2,
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                    );
-                  },
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("Ream more..."),
-                ),
+                // TextButton(
+                //   onPressed: () {},
+                //   child: Text("Ream more..."),
+                // ),
               ],
             ),
           ),
