@@ -41,6 +41,8 @@ class SingleProduct extends StatefulWidget {
 class _SingleProductState extends State<SingleProduct> {
   bool cartAdded = false;
   bool isFavorite = false;
+  bool overflowing = false;
+  bool readmore = false;
 
   Widget buildimage() {
     final Uri? uri = Uri.tryParse(widget.productImage);
@@ -54,261 +56,299 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
-    FirebaseFirestore.instance
-        .collection("favorite")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("userFavorite")
-        .doc(widget.productId)
-        .get()
-        .then(
-          (value) => {
-            if (this.mounted)
-              {
-                if (value.exists)
-                  {
-                    setState(() {
-                      isFavorite = value.get("productFavorite");
-                    }),
-                  }
-              }
-          },
-        );
+    // FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
+    // FirebaseFirestore.instance
+    //     .collection("favorite")
+    //     .doc(FirebaseAuth.instance.currentUser?.uid)
+    //     .collection("userFavorite")
+    //     .doc(widget.productId)
+    //     .get()
+    //     .then(
+    //       (value) => {
+    //         if (this.mounted)
+    //           {
+    //             if (value.exists)
+    //               {
+    //                 setState(() {
+    //                   isFavorite = value.get("productFavorite");
+    //                 }),
+    //               }
+    //           }
+    //       },
+    //     );
 
-    CartProvider cartProvider = Provider.of<CartProvider>(context);
-    FirebaseFirestore.instance
-        .collection("cart")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .collection("userCart")
-        .doc(widget.productId)
-        .get()
-        .then(
-          (value) => {
-            if (this.mounted)
-              {
-                if (value.exists)
-                  {
-                    setState(() {
-                      cartAdded = true;
-                    }),
-                  }
-              }
-          },
-        );
+    // CartProvider cartProvider = Provider.of<CartProvider>(context);
+    // FirebaseFirestore.instance
+    //     .collection("cart")
+    //     .doc(FirebaseAuth.instance.currentUser?.uid)
+    //     .collection("userCart")
+    //     .doc(widget.productId)
+    //     .get()
+    //     .then(
+    //       (value) => {
+    //         if (this.mounted)
+    //           {
+    //             if (value.exists)
+    //               {
+    //                 setState(() {
+    //                   cartAdded = true;
+    //                 }),
+    //               }
+    //           }
+    //       },
+    //     );
 
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Container(
-        width: double.infinity,
-        //  height: MediaQuery.of(context).size.height * .20,
-        margin: EdgeInsets.symmetric(
-          horizontal: 15.0,
-          vertical: 5.0,
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: 15.0,
-          vertical: 10.0,
-        ),
+    return Container(
+      width: double.infinity,
+      //  height: MediaQuery.of(context).size.height * .20,
+      margin: EdgeInsets.symmetric(
+        horizontal: 15.0,
+        vertical: 5.0,
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 15.0,
+        vertical: 10.0,
+      ),
 
-        decoration: BoxDecoration(
-          color: Color.fromRGBO(255, 255, 255, 1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          children: [
-            //contains the image
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 1),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        children: [
+          //contains the image
 
-            SizedBox(
-              width: MediaQuery.of(context).size.width * .01,
-            ),
-            //contains the name, category and price
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    widget.productName,
-                    //  maxLines: 1,
-                    softWrap: true,
-                    //  overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    widget.productCategory,
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "\₹ ${widget.productPrice}",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color.fromRGBO(64, 175, 110, 1)),
-                      ),
-                      Spacer(),
-                      widget.productOldPrice != widget.productPrice
-                          ? Text(
-                              "\₹ ${widget.productOldPrice}   ",
-                              style: GoogleFonts.poppins(
-                                  decoration: TextDecoration.lineThrough,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Color.fromRGBO(95, 95, 95, 1)),
-                            )
-                          : Text(""),
-                    ],
-                  ),
-                  Text(
-                    widget.productDescription,
-                    maxLines: 1,
-                    softWrap: true,
-                    //  overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
-            //contains the card icon on the top and favorite on the bottom
-            // Column(
-            //   children: [
-            //     GestureDetector(
-            //       onTap: () async {
-            //         DocumentReference docRef = FirebaseFirestore.instance
-            //             .collection("cart")
-            //             .doc(FirebaseAuth.instance.currentUser!.uid)
-            //             .collection("userCart")
-            //             .doc(widget.productId);
-
-            //         DocumentSnapshot docSnap = await docRef.get();
-            //         if (docSnap.exists) {
-            //           print('Product is already in the cart');
-            //         } else {
-            //           cartAdded = true;
-            //           docRef.set(
-            //             {
-            //               "productId": widget.productId,
-            //               "productImage": widget.productImage,
-            //               "productName": widget.productName,
-            //               "productPrice": widget.productPrice,
-            //               "productOldPrice": widget.productPrice,
-            //               "productDescription": widget.productDescription,
-            //               "productQuantity": 1,
-            //               "productCategory": widget.productCategory,
-            //             },
-            //           );
-            //         }
-            //         RoutingPage.goTonext(
-            //           context: context,
-            //           navigateTo: CheckOutPage(),
-            //         );
-            //       },
-            //       child: Container(
-            //         padding: EdgeInsets.all(10),
-            //         //   width: MediaQuery.of(context).size.width * .15,
-            //         //  height: MediaQuery.of(context).size.width * .15,
-            //         decoration: BoxDecoration(
-            //           color: Color.fromRGBO(254, 205, 67, 1),
-            //           borderRadius: BorderRadius.circular(50),
-            //         ),
-            //         child: Icon(
-            //           cartAdded
-            //               ? CupertinoIcons.cart_fill
-            //               : CupertinoIcons.cart,
-            //           size: 14,
-            //           color: const Color.fromARGB(255, 0, 0, 0),
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       height: MediaQuery.of(context).size.width * .05,
-            //     ),
-            //     Container(
-            //       width: MediaQuery.of(context).size.width * .08,
-            //       height: MediaQuery.of(context).size.width * .08,
-            //       decoration: BoxDecoration(
-            //         color: Color.fromRGBO(64, 175, 110, 1),
-            //         borderRadius: BorderRadius.circular(10),
-            //       ),
-            //       child: Icon(
-            //         Icons.favorite_border,
-            //         color: Colors.white,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            Stack(
+          SizedBox(
+            width: MediaQuery.of(context).size.width * .01,
+          ),
+          //contains the name, category and price
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * .20,
-                  height: MediaQuery.of(context).size.width * .20,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(widget.productImage),
-                    ),
-                    borderRadius: BorderRadius.circular(10),
+                Text(
+                  widget.productName,
+                  //  maxLines: 1,
+                  softWrap: true,
+                  //  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
                   ),
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.width * .18,
-                  left: (MediaQuery.of(context).size.width * .18) / 2,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * .05,
-                    height: MediaQuery.of(context).size.width * .05,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(64, 175, 110, 1),
-                      //borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      Icons.star,
-                      color: Colors.white,
-                      size: 10,
-                    ),
+                Text(
+                  widget.productCategory,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\₹ ${widget.productPrice}",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Color.fromRGBO(64, 175, 110, 1)),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
+                    ),
+                    widget.productOldPrice != widget.productPrice
+                        ? Text(
+                            "\₹ ${widget.productOldPrice}   ",
+                            style: GoogleFonts.poppins(
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Color.fromRGBO(95, 95, 95, 1)),
+                          )
+                        : Text(""),
+                  ],
+                ),
+                // Text(
+                //   "nothing new just testing things onothing new just testing things onothing new just testing things onothing new just testing things out hahahahahshshhshahahahahahaasdasdsadsfdas", // widget.productDescription,
+                //   maxLines: 2,
+                //   softWrap: true,
+                //   overflow: TextOverflow.ellipsis,
+                //   style: GoogleFonts.poppins(
+                //     fontWeight: FontWeight.w400,
+                //     fontSize: 10,
+                //   ),
+                // ),
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    final span = TextSpan(
+                      text:
+                          "hahabsdkjasbdfjhawebfjhebwrhfjkaberfhjberosadsadsadsfuhberouyfberuyfberuoyfberuoyfberyuofberouyfberuybf", // widget.productDescription,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 10,
+                      ),
+                    );
+                    final tp = TextPainter(
+                      text: span,
+                      textDirection: TextDirection.ltr,
+                      maxLines: 2,
+                    );
+                    tp.layout(maxWidth: constraints.maxWidth);
+
+                    if (tp.didExceedMaxLines) {
+                      // The text is overflowing
+                      overflowing = true;
+                    } else {
+                      // The text is not overflowing
+                      overflowing = false;
+                    }
+
+                    return Text.rich(
+                      span,
+                      maxLines: overflowing && readmore ? 10 : 2,
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  },
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text("Ream more..."),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.001,
+          ),
+          //contains the card icon on the top and favorite on the bottom
+          // Column(
+          //   children: [
+          //     GestureDetector(
+          //       onTap: () async {
+          //         DocumentReference docRef = FirebaseFirestore.instance
+          //             .collection("cart")
+          //             .doc(FirebaseAuth.instance.currentUser!.uid)
+          //             .collection("userCart")
+          //             .doc(widget.productId);
 
-        //           onPressed: () {
-        //             setState(
-        //               () {
-        //                 //  isFavorite = !isFavorite;
-
-        //                 if (isFavorite == true) {
-        //                   favoriteProvider.favorite(
-        //                     productId: widget.productId,
-        //                     productCategory: widget.productCategory,
-        //                     productRate: widget.productRate,
-        //                     productOldPrice: double.parse(widget.productOldPrice),
-        //                     productPrice: double.parse(widget.productPrice),
-        //                     productImage: buildimage,
-        //                     productFavorite: true,
-        //                     productName: widget.productName,
-        //                   );
-        //                 } else if (isFavorite == false) {
-        //                   favoriteProvider.deleteFavorite(
-        //                       productId: widget.productId);
-        //                 }
-        //               },
-        //             );
-        //           },
+          //         DocumentSnapshot docSnap = await docRef.get();
+          //         if (docSnap.exists) {
+          //           print('Product is already in the cart');
+          //         } else {
+          //           cartAdded = true;
+          //           docRef.set(
+          //             {
+          //               "productId": widget.productId,
+          //               "productImage": widget.productImage,
+          //               "productName": widget.productName,
+          //               "productPrice": widget.productPrice,
+          //               "productOldPrice": widget.productPrice,
+          //               "productDescription": widget.productDescription,
+          //               "productQuantity": 1,
+          //               "productCategory": widget.productCategory,
+          //             },
+          //           );
+          //         }
+          //         RoutingPage.goTonext(
+          //           context: context,
+          //           navigateTo: CheckOutPage(),
+          //         );
+          //       },
+          //       child: Container(
+          //         padding: EdgeInsets.all(10),
+          //         //   width: MediaQuery.of(context).size.width * .15,
+          //         //  height: MediaQuery.of(context).size.width * .15,
+          //         decoration: BoxDecoration(
+          //           color: Color.fromRGBO(254, 205, 67, 1),
+          //           borderRadius: BorderRadius.circular(50),
+          //         ),
+          //         child: Icon(
+          //           cartAdded
+          //               ? CupertinoIcons.cart_fill
+          //               : CupertinoIcons.cart,
+          //           size: 14,
+          //           color: const Color.fromARGB(255, 0, 0, 0),
+          //         ),
+          //       ),
+          //     ),
+          //     SizedBox(
+          //       height: MediaQuery.of(context).size.width * .05,
+          //     ),
+          //     Container(
+          //       width: MediaQuery.of(context).size.width * .08,
+          //       height: MediaQuery.of(context).size.width * .08,
+          //       decoration: BoxDecoration(
+          //         color: Color.fromRGBO(64, 175, 110, 1),
+          //         borderRadius: BorderRadius.circular(10),
+          //       ),
+          //       child: Icon(
+          //         Icons.favorite_border,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * .20,
+                height: MediaQuery.of(context).size.width * .20,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(widget.productImage),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.width * .18,
+                left: (MediaQuery.of(context).size.width * .18) / 2,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .05,
+                  height: MediaQuery.of(context).size.width * .05,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(64, 175, 110, 1),
+                    //borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    Icons.star,
+                    color: Colors.white,
+                    size: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
+
+      //           onPressed: () {
+      //             setState(
+      //               () {
+      //                 //  isFavorite = !isFavorite;
+
+      //                 if (isFavorite == true) {
+      //                   favoriteProvider.favorite(
+      //                     productId: widget.productId,
+      //                     productCategory: widget.productCategory,
+      //                     productRate: widget.productRate,
+      //                     productOldPrice: double.parse(widget.productOldPrice),
+      //                     productPrice: double.parse(widget.productPrice),
+      //                     productImage: buildimage,
+      //                     productFavorite: true,
+      //                     productName: widget.productName,
+      //                   );
+      //                 } else if (isFavorite == false) {
+      //                   favoriteProvider.deleteFavorite(
+      //                       productId: widget.productId);
+      //                 }
+      //               },
+      //             );
+      //           },
     );
   }
 }
