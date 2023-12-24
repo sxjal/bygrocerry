@@ -100,15 +100,16 @@ class _SingleProductState extends State<SingleProduct> {
       onTap: widget.onTap,
       child: Container(
         width: double.infinity,
+        //  height: MediaQuery.of(context).size.height * .20,
         margin: EdgeInsets.symmetric(
           horizontal: 15.0,
-          vertical: 10.0,
+          vertical: 5.0,
         ),
         padding: EdgeInsets.symmetric(
           horizontal: 15.0,
           vertical: 10.0,
         ),
-        height: MediaQuery.of(context).size.height * .15,
+
         decoration: BoxDecoration(
           color: Color.fromRGBO(255, 255, 255, 1),
           borderRadius: BorderRadius.circular(10),
@@ -116,76 +117,101 @@ class _SingleProductState extends State<SingleProduct> {
         child: Row(
           children: [
             //contains the image
-            Stack(children: [
-              Container(
-                width: MediaQuery.of(context).size.width * .20,
-                height: MediaQuery.of(context).size.width * .20,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(widget.productImage),
+
+            Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * .20,
+                  height: MediaQuery.of(context).size.width * .20,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(widget.productImage),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  borderRadius: BorderRadius.circular(10),
                 ),
-              ),
-              Positioned(
-                child: Container(),
-              ),
-            ]),
+                Positioned(
+                  top: MediaQuery.of(context).size.width * .18,
+                  left: (MediaQuery.of(context).size.width * .18) / 2,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .05,
+                    height: MediaQuery.of(context).size.width * .05,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(64, 175, 110, 1),
+                      //borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      Icons.star,
+                      color: Colors.white,
+                      size: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             SizedBox(
               width: MediaQuery.of(context).size.width * .05,
             ),
             //contains the name, category and price
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 5,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "very veruy very long text", //  widget.productName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    widget.productName,
+                    //  maxLines: 1,
+                    softWrap: true,
+                    //  overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    widget.productCategory,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "\₹ ${widget.productPrice}",
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color.fromRGBO(64, 175, 110, 1)),
                       ),
+                      widget.productOldPrice != widget.productPrice
+                          ? Text(
+                              "\₹ ${widget.productOldPrice}   ",
+                              style: GoogleFonts.poppins(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Color.fromRGBO(95, 95, 95, 1)),
+                            )
+                          : Text(""),
+                    ],
+                  ),
+                  Text(
+                    widget.productDescription,
+                    maxLines: 1,
+                    softWrap: true,
+                    //  overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
                     ),
                   ),
-                ),
-                Text(
-                  widget.productCategory,
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    widget.productOldPrice != widget.productPrice
-                        ? Text(
-                            "\₹ ${widget.productOldPrice}   ",
-                            style: GoogleFonts.poppins(
-                                decoration: TextDecoration.lineThrough,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Color.fromRGBO(95, 95, 95, 1)),
-                          )
-                        : Text(""),
-                    Text(
-                      "\₹ ${widget.productPrice}",
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color.fromRGBO(64, 175, 110, 1)),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
             Spacer(),
             //contains the card icon on the top and favorite on the bottom
