@@ -35,7 +35,8 @@ class _GridViewWidgetState extends State<GridViewWidget> {
           );
         }
 
-        print("before listview");
+        
+
 
         return SingleChildScrollView(
           child: Container(
@@ -44,9 +45,9 @@ class _GridViewWidgetState extends State<GridViewWidget> {
               // shrinkWrap: true,
               itemCount: snapshort.data!.docs.length,
               itemBuilder: (ctx, index) {
-                print("inside listview");
+               
                 var data = snapshort.data!.docs[index];
-                print("dataworks");
+              
                 return SingleProduct(
                   onTap: () {
                     RoutingPage.goTonext(

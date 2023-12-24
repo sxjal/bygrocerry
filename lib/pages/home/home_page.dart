@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          print(userModel.emailAddress);
+         
           userModel = UserModel.fromDocument(documentSnapshot);
         } else {
           print("Document does not exist in the database");

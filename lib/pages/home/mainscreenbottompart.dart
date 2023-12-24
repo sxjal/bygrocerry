@@ -16,7 +16,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
       FirebaseFirestore.instance.collection("categories").snapshots();
   var productStream =
       FirebaseFirestore.instance.collection("products").snapshots();
-  
+
   //get the length of the stream
   String query = "";
   var result;
@@ -34,10 +34,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     required String categoryName,
     required String categoryId,
   }) {
-    print("inside buildCategory");
-    print("categoryName $categoryName");
-    print("categoryId $categoryId");
-
+    
     return Container(
       width: 300,
       height: 200,
