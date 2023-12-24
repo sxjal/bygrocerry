@@ -34,6 +34,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     required String categoryName,
     required String categoryId,
   }) {
+    print("inside buildCategory");
     print("categoryName $categoryName");
     print("categoryId $categoryId");
 
@@ -123,8 +124,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                   buildCategory(
                     categoryName: doc["categoryName"].toString(),
                     //fetch the document id of this category
-
-                    categoryId: doc["categoryId"].toString(),
+                    categoryId: doc.id, //doc["categoryId"].toString(),
                   ),
                 );
               },
