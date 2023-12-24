@@ -36,10 +36,20 @@ class _HomePageState extends State<HomePage> {
     final Uri? uri = Uri.tryParse(imageUrl);
 
     if (uri == null || !uri.hasScheme) {
-      return NetworkImage("images/user.png");
+      return NetworkImage(uri.toString());
     }
 
     return NetworkImage(imageUrl);
+  }
+
+  AssetImage buildUserImage(imageUrl) {
+    final Uri? uri = Uri.tryParse(imageUrl);
+
+    if (uri == null || !uri.hasScheme) {
+      return AssetImage("images/user.png");
+    }
+
+    return AssetImage(imageUrl);
   }
 
   @override
@@ -133,12 +143,15 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(50),
                               image: widget.user.imageurl == "notset"
                                   ? DecorationImage(
-                                      image: AssetImage("images/user.png"),
+                                      image: buildUserImage(
+                                        "images/user.png",
+                                      ), // AssetImage("images/user.png"),
                                       fit: BoxFit.cover,
                                     )
                                   : DecorationImage(
-                                      image: buildImage(widget.user
-                                          .imageurl), // NetworkImage(widget.user.imageurl),
+                                      image: buildImage(
+                                        widget.user.imageurl,
+                                      ), // NetworkImage(widget.user.imageurl),
                                       fit: BoxFit.cover,
                                     ),
                             ),
