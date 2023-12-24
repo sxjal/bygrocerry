@@ -14,7 +14,7 @@ class MainScreenBottomPart extends StatefulWidget {
 
 class MainScreenBottomPartState extends State<MainScreenBottomPart> {
   var selectedTab = 0;
-
+  ScrollController _scrollController = ScrollController();
   var categoryStream =
       FirebaseFirestore.instance.collection("categories").snapshots();
   var productStream =
@@ -59,6 +59,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
             return Center(child: const CircularProgressIndicator());
           }
           return ListView.builder(
+            controller: _scrollController,
             scrollDirection: Axis.vertical,
             physics: BouncingScrollPhysics(),
             itemCount: streamSnapshort.data!.docs.length,
@@ -71,31 +72,98 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
               print("data");
               print(data['productName']);
-              return SingleProduct(
-                onTap: () {
-                  RoutingPage.goTonext(
-                    context: context,
-                    navigateTo: DetailsPage(
-                      productCategory: data["productCategory"],
-                      productId: data["productId"],
-                      productImage: data["productImage"],
-                      productName: data["productName"],
-                      productOldPrice:
-                          (data["productOldPrice"] as num).toDouble(),
-                      productPrice: (data["productPrice"] as num).toDouble(),
-                      productRate: data["productRate"],
-                      productDescription: data["productDescription"],
-                    ),
-                  );
-                },
-                productDescription: data["productDescription"],
-                productId: data["productId"],
-                productCategory: data["productCategory"],
-                productRate: data["productRate"],
-                productOldPrice: data["productOldPrice"],
-                productPrice: data["productPrice"],
-                productImage: data["productImage"],
-                productName: data["productName"],
+              return Column(
+                children: [
+                  SingleProduct(
+                    onTap: () {
+                      RoutingPage.goTonext(
+                        context: context,
+                        navigateTo: DetailsPage(
+                          productCategory: data["productCategory"],
+                          productId: data["productId"],
+                          productImage: data["productImage"],
+                          productName: data["productName"],
+                          productOldPrice:
+                              (data["productOldPrice"] as num).toDouble(),
+                          productPrice:
+                              (data["productPrice"] as num).toDouble(),
+                          productRate: data["productRate"],
+                          productDescription: data["productDescription"],
+                        ),
+                      );
+                    },
+                    productDescription: data["productDescription"],
+                    productId: data["productId"],
+                    productCategory: data["productCategory"],
+                    productRate: data["productRate"],
+                    productOldPrice: data["productOldPrice"],
+                    productPrice: data["productPrice"],
+                    productImage: data["productImage"],
+                    productName: data["productName"],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  index == streamSnapshort.data!.docs.length - 1
+                      ? Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              Divider(
+                                thickness: 2,
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              ),
+                              Text(
+                                "You've reached the end of this category",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color:
+                                      const Color.fromARGB(255, 185, 185, 185),
+                                ),
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.005,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Have any questions?"),
+                                  TextButton(
+                                    onPressed: () {
+                                      _scrollController.animateTo(
+                                        0.0,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.fastOutSlowIn,
+                                      );
+                                    },
+                                    child: Text("Read our FAQs"),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _scrollController.animateTo(
+                                        0.0,
+                                        duration: Duration(seconds: 1),
+                                        curve: Curves.easeInOut,
+                                      );
+                                    },
+                                    icon: Icon(Icons.arrow_upward),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01,
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(), //Text("sa"),
+                ],
               );
             },
           );
