@@ -16,6 +16,7 @@ class SingleProduct extends StatefulWidget {
   final productPrice;
   final productImage;
   final productName;
+  final productDescription;
   final Function()? onTap;
   const SingleProduct({
     Key? key,
@@ -27,6 +28,7 @@ class SingleProduct extends StatefulWidget {
     required this.productPrice,
     required this.productImage,
     required this.productName,
+    required this.productDescription,
   }) : super(key: key);
 
   @override

@@ -35,9 +35,6 @@ class _GridViewWidgetState extends State<GridViewWidget> {
           );
         }
 
-        
-
-
         return SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height,
@@ -45,9 +42,8 @@ class _GridViewWidgetState extends State<GridViewWidget> {
               // shrinkWrap: true,
               itemCount: snapshort.data!.docs.length,
               itemBuilder: (ctx, index) {
-               
                 var data = snapshort.data!.docs[index];
-              
+
                 return SingleProduct(
                   onTap: () {
                     RoutingPage.goTonext(
@@ -71,6 +67,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                   productPrice: data["productPrice"],
                   productImage: data["productImage"],
                   productName: data["productName"],
+                  productDescription: data["productDescription"],
                 );
               },
             ),
