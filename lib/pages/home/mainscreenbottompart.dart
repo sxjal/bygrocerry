@@ -178,7 +178,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
         return DefaultTabController(
           length: tabs.length,
           child: Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromRGBO(248, 249, 251, 1),
             appBar: TabBar(
               isScrollable: true,
               indicator: UnderlineTabIndicator(

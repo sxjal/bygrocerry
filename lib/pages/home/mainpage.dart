@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromRGBO(248, 249, 251, 1),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * .6,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Color.fromRGBO(248, 249, 251, 1),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                     ),

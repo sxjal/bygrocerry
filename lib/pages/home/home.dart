@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: true,
 
       bottomNavigationBar: StylishBottomBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(248, 249, 251, 1),
         option: AnimatedBarOptions(
           // iconSize: 32,
           barAnimation: BarAnimation.fade,

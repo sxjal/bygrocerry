@@ -66,73 +66,107 @@ class _SingleProductState extends State<SingleProduct> {
 
     return GestureDetector(
       onTap: widget.onTap,
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.all(12.0),
-            alignment: Alignment.topRight,
-            height: MediaQuery.of(context).size.height * .2,
-            width: MediaQuery.of(context).size.width * .2,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(widget.productImage),
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.symmetric(
+          horizontal: 15.0,
+          vertical: 10.0,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.0,
+          vertical: 10.0,
+        ),
+        height: MediaQuery.of(context).size.height * .15,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(255, 255, 255, 1),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            //contains the image
+            Container(
+              width: MediaQuery.of(context).size.width * .20,
+              height: MediaQuery.of(context).size.width * .20,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(widget.productImage),
+                ),
+                borderRadius: BorderRadius.circular(10),
               ),
-              borderRadius: BorderRadius.circular(20),
             ),
-            child: IconButton(
-              highlightColor: Colors.transparent,
-              splashColor: Colors.transparent,
-              onPressed: () {
-                setState(
-                  () {
-                    //  isFavorite = !isFavorite;
+            Spacer(),
+            //contains the name, category and price
+            Column(),
+            Spacer(),
+            //contains the card icon on the top and favorite on the bottom
+            Column(),
+          ],
+        ),
+        //   Row(
+        //     children: [
+        //       Container(
+        //         decoration: BoxDecoration(
+        //           image: DecorationImage(
+        //             fit: BoxFit.cover,
+        //             image: NetworkImage(widget.productImage),
+        //           ),
+        //           borderRadius: BorderRadius.circular(20),
+        //         ),
+        //         child: IconButton(
+        //           highlightColor: Colors.transparent,
+        //           splashColor: Colors.transparent,
+        //           onPressed: () {
+        //             setState(
+        //               () {
+        //                 //  isFavorite = !isFavorite;
 
-                    if (isFavorite == true) {
-                      favoriteProvider.favorite(
-                        productId: widget.productId,
-                        productCategory: widget.productCategory,
-                        productRate: widget.productRate,
-                        productOldPrice: double.parse(widget.productOldPrice),
-                        productPrice: double.parse(widget.productPrice),
-                        productImage: buildimage,
-                        productFavorite: true,
-                        productName: widget.productName,
-                      );
-                    } else if (isFavorite == false) {
-                      favoriteProvider.deleteFavorite(
-                          productId: widget.productId);
-                    }
-                  },
-                );
-              },
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: Colors.pink[700],
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                widget.productName,
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                "\₹${widget.productPrice}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          )
-        ],
+        //                 if (isFavorite == true) {
+        //                   favoriteProvider.favorite(
+        //                     productId: widget.productId,
+        //                     productCategory: widget.productCategory,
+        //                     productRate: widget.productRate,
+        //                     productOldPrice: double.parse(widget.productOldPrice),
+        //                     productPrice: double.parse(widget.productPrice),
+        //                     productImage: buildimage,
+        //                     productFavorite: true,
+        //                     productName: widget.productName,
+        //                   );
+        //                 } else if (isFavorite == false) {
+        //                   favoriteProvider.deleteFavorite(
+        //                       productId: widget.productId);
+        //                 }
+        //               },
+        //             );
+        //           },
+        //           icon: Icon(
+        //             isFavorite ? Icons.favorite : Icons.favorite_border,
+        //             color: Colors.pink[700],
+        //           ),
+        //         ),
+        //       ),
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //         children: [
+        //           Text(
+        //             widget.productName,
+        //             style: TextStyle(
+        //               fontWeight: FontWeight.normal,
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             width: 20,
+        //           ),
+        //           Text(
+        //             "\₹${widget.productPrice}",
+        //             style: TextStyle(
+        //               fontWeight: FontWeight.bold,
+        //             ),
+        //           ),
+        //         ],
+        //       )
+        //     ],
+        //   ),
       ),
     );
   }
