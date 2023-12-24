@@ -30,12 +30,17 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     return result;
   }
 
-  Widget buildCategory(
-      {required String categoryName, required String categoryId}) {
+  Widget buildCategory({
+    required String categoryName,
+    required String categoryId,
+  }) {
     print("categoryName $categoryName");
     print("categoryId $categoryId");
+
     return Expanded(
       child: Container(
+        width: 300,
+        height: 200,
         child: GridViewWidget(
           subCollection: categoryName,
           collection: "categories",
@@ -117,6 +122,8 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                   index,
                   buildCategory(
                     categoryName: doc["categoryName"].toString(),
+                    //fetch the document id of this category
+
                     categoryId: doc["categoryId"].toString(),
                   ),
                 );
