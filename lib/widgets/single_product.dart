@@ -308,16 +308,26 @@ class _SingleProductState extends State<SingleProduct> {
                 top: MediaQuery.of(context).size.width * .18,
                 left: (MediaQuery.of(context).size.width * .18) / 2,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * .05,
-                  height: MediaQuery.of(context).size.width * .05,
+                  width: 50,
+                  height: 50, //MediaQuery.of(context).size.width * .05,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(64, 175, 110, 1),
                     //borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Icon(
-                    Icons.star,
-                    color: Colors.white,
-                    size: 10,
+                  child: Row(
+                    children: [
+                      Text("Add"),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 8,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
