@@ -183,73 +183,73 @@ class _SingleProductState extends State<SingleProduct> {
             ),
             Spacer(),
             //contains the card icon on the top and favorite on the bottom
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    DocumentReference docRef = FirebaseFirestore.instance
-                        .collection("cart")
-                        .doc(FirebaseAuth.instance.currentUser!.uid)
-                        .collection("userCart")
-                        .doc(widget.productId);
+            // Column(
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () async {
+            //         DocumentReference docRef = FirebaseFirestore.instance
+            //             .collection("cart")
+            //             .doc(FirebaseAuth.instance.currentUser!.uid)
+            //             .collection("userCart")
+            //             .doc(widget.productId);
 
-                    DocumentSnapshot docSnap = await docRef.get();
-                    if (docSnap.exists) {
-                      print('Product is already in the cart');
-                    } else {
-                      cartAdded = true;
-                      docRef.set(
-                        {
-                          "productId": widget.productId,
-                          "productImage": widget.productImage,
-                          "productName": widget.productName,
-                          "productPrice": widget.productPrice,
-                          "productOldPrice": widget.productPrice,
-                          "productDescription": widget.productDescription,
-                          "productQuantity": 1,
-                          "productCategory": widget.productCategory,
-                        },
-                      );
-                    }
-                    RoutingPage.goTonext(
-                      context: context,
-                      navigateTo: CheckOutPage(),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    //   width: MediaQuery.of(context).size.width * .15,
-                    //  height: MediaQuery.of(context).size.width * .15,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(254, 205, 67, 1),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Icon(
-                      cartAdded
-                          ? CupertinoIcons.cart_fill
-                          : CupertinoIcons.cart,
-                      size: 14,
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * .05,
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * .08,
-                  height: MediaQuery.of(context).size.width * .08,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(64, 175, 110, 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
+            //         DocumentSnapshot docSnap = await docRef.get();
+            //         if (docSnap.exists) {
+            //           print('Product is already in the cart');
+            //         } else {
+            //           cartAdded = true;
+            //           docRef.set(
+            //             {
+            //               "productId": widget.productId,
+            //               "productImage": widget.productImage,
+            //               "productName": widget.productName,
+            //               "productPrice": widget.productPrice,
+            //               "productOldPrice": widget.productPrice,
+            //               "productDescription": widget.productDescription,
+            //               "productQuantity": 1,
+            //               "productCategory": widget.productCategory,
+            //             },
+            //           );
+            //         }
+            //         RoutingPage.goTonext(
+            //           context: context,
+            //           navigateTo: CheckOutPage(),
+            //         );
+            //       },
+            //       child: Container(
+            //         padding: EdgeInsets.all(10),
+            //         //   width: MediaQuery.of(context).size.width * .15,
+            //         //  height: MediaQuery.of(context).size.width * .15,
+            //         decoration: BoxDecoration(
+            //           color: Color.fromRGBO(254, 205, 67, 1),
+            //           borderRadius: BorderRadius.circular(50),
+            //         ),
+            //         child: Icon(
+            //           cartAdded
+            //               ? CupertinoIcons.cart_fill
+            //               : CupertinoIcons.cart,
+            //           size: 14,
+            //           color: const Color.fromARGB(255, 0, 0, 0),
+            //         ),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       height: MediaQuery.of(context).size.width * .05,
+            //     ),
+            //     Container(
+            //       width: MediaQuery.of(context).size.width * .08,
+            //       height: MediaQuery.of(context).size.width * .08,
+            //       decoration: BoxDecoration(
+            //         color: Color.fromRGBO(64, 175, 110, 1),
+            //         borderRadius: BorderRadius.circular(10),
+            //       ),
+            //       child: Icon(
+            //         Icons.favorite_border,
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             Stack(
               children: [
                 Container(
