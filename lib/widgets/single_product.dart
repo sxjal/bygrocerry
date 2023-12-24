@@ -313,13 +313,19 @@ class _SingleProductState extends State<SingleProduct> {
                   //bottom: 50,
                   child: cartAdded
                       ? Container(
-                          width: 70,
+                          width: 55,
                           height: 20, //MediaQuery.of(context).size.width * .05,
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(64, 175, 110, 1),
+                            color: Color.fromRGBO(64, 190, 117, 1),
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(
+                              color: Color.fromRGBO(33, 160, 86, 1),
+                              width: .5,
+                            ),
                             //borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -328,14 +334,14 @@ class _SingleProductState extends State<SingleProduct> {
                                 child: Icon(
                                   Icons.remove,
                                   color: Colors.white,
-                                  size: 10,
+                                  size: 12,
                                 ),
                               ),
                               Text(
                                 "2",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10,
+                                  fontSize: 12,
                                 ),
                               ),
                               GestureDetector(
@@ -345,7 +351,7 @@ class _SingleProductState extends State<SingleProduct> {
                                 child: Icon(
                                   Icons.add,
                                   color: Colors.white,
-                                  size: 10,
+                                  size: 12,
                                 ),
                               ),
                             ],

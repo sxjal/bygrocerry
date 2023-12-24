@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                     end: Alignment.bottomRight,
                     colors: [
                       Color.fromRGBO(33, 160, 86, 1),
-                      Color.fromRGBO(64, 190, 117, 1)
+                      Color.fromRGBO(64, 190, 117, 1),
                     ],
                   ),
                 ),
