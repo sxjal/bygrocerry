@@ -1,3 +1,7 @@
+import 'package:bygrocerry/pages/checkout/checkout.dart';
+import 'package:bygrocerry/route/routing_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -156,18 +160,43 @@ class _SingleProductState extends State<SingleProduct> {
             //contains the card icon on the top and favorite on the bottom
             Column(
               children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  //   width: MediaQuery.of(context).size.width * .15,
-                  //  height: MediaQuery.of(context).size.width * .15,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(254, 205, 67, 1),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Icon(
-                    CupertinoIcons.cart_fill,
-                    size: 14,
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                GestureDetector(
+                  onTap: () {
+                    FirebaseFirestore.instance
+                        .collection("cart")
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .collection("userCart")
+                        .doc(widget.productId)
+                        .set(
+                      {
+                        "productId": widget.productId,
+                        "productImage": widget.productImage,
+                        "productName": widget.productName,
+                        "productPrice": widget.productPrice,
+                        "productOldPrice": widget.productPrice,
+                        "productDescription": widget.productDescription,
+                        "productQuantity": 1,
+                        "productCategory": widget.productCategory,
+                      },
+                    );
+                    RoutingPage.goTonext(
+                      context: context,
+                      navigateTo: CheckOutPage(),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    //   width: MediaQuery.of(context).size.width * .15,
+                    //  height: MediaQuery.of(context).size.width * .15,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(254, 205, 67, 1),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Icon(
+                      CupertinoIcons.cart_fill,
+                      size: 14,
+                      color: const Color.fromARGB(255, 0, 0, 0),
+                    ),
                   ),
                 ),
                 SizedBox(
