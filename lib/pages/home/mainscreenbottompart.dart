@@ -67,11 +67,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               var varData = searchFunction(query, streamSnapshort.data!.docs);
               var data = varData[index];
               // var data = streamSnapshort.data!.docs[index];
-              print("length");
-              print(streamSnapshort.data!.docs.length);
 
-              print("data");
-              print(data['productName']);
               return Column(
                 children: [
                   SingleProduct(
