@@ -116,17 +116,22 @@ class _SingleProductState extends State<SingleProduct> {
         child: Row(
           children: [
             //contains the image
-            Container(
-              width: MediaQuery.of(context).size.width * .20,
-              height: MediaQuery.of(context).size.width * .20,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(widget.productImage),
+            Stack(children: [
+              Container(
+                width: MediaQuery.of(context).size.width * .20,
+                height: MediaQuery.of(context).size.width * .20,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(widget.productImage),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                borderRadius: BorderRadius.circular(10),
               ),
-            ),
+              Positioned(
+                child: Container(),
+              ),
+            ]),
             SizedBox(
               width: MediaQuery.of(context).size.width * .05,
             ),
