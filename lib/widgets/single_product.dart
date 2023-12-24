@@ -78,7 +78,7 @@ class _SingleProductState extends State<SingleProduct> {
     //       },
     //     );
 
-    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    //CartProvider cartProvider = Provider.of<CartProvider>(context);
     FirebaseFirestore.instance
         .collection("cart")
         .doc(FirebaseAuth.instance.currentUser?.uid)
