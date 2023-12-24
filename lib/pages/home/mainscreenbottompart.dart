@@ -1,4 +1,7 @@
+import 'package:bygrocerry/pages/detailPage/details_page.dart';
+import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/grid_view_widget.dart';
+import 'package:bygrocerry/widgets/single_product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -34,13 +37,62 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     required String categoryName,
     required String categoryId,
   }) {
-    
     return Container(
       width: 300,
       height: 200,
       child: GridViewWidget(
         subCollection: categoryName,
         id: categoryId,
+      ),
+    );
+  }
+
+  Widget buildProduct(
+      {required Stream<QuerySnapshot<Map<String, dynamic>>>? stream}) {
+    return Container(
+      height: 200,
+      child: StreamBuilder(
+        stream: stream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
+          if (!streamSnapshort.hasData) {
+            return Center(child: const CircularProgressIndicator());
+          }
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            physics: BouncingScrollPhysics(),
+            itemCount: streamSnapshort.data!.docs.length,
+            itemBuilder: (ctx, index) {
+              var varData = searchFunction(query, streamSnapshort.data!.docs);
+              var data = varData[index];
+              // var data = streamSnapshort.data!.docs[index];
+              return SingleProduct(
+                onTap: () {
+                  RoutingPage.goTonext(
+                    context: context,
+                    navigateTo: DetailsPage(
+                      productCategory: data["productCategory"],
+                      productId: data["productId"],
+                      productImage: data["productImage"],
+                      productName: data["productName"],
+                      productOldPrice:
+                          (data["productOldPrice"] as num).toDouble(),
+                      productPrice: (data["productPrice"] as num).toDouble(),
+                      productRate: data["productRate"],
+                      productDescription: data["productDescription"],
+                    ),
+                  );
+                },
+                productId: data["productId"],
+                productCategory: data["productCategory"],
+                productRate: data["productRate"],
+                productOldPrice: data["productOldPrice"],
+                productPrice: data["productPrice"],
+                productImage: data["productImage"],
+                productName: data["productName"],
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -100,11 +152,19 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
             .toList();
 
         var othetabs = [
-          Text(
-            "All products",
+          buildProduct(
+            stream:
+                FirebaseFirestore.instance.collection("products").snapshots(),
           ),
-          Text(
-            "BestSells",
+          buildProduct(
+            stream: FirebaseFirestore.instance
+                .collection("products")
+                .where("productRate", isGreaterThan: 4)
+                .orderBy(
+                  "productRate",
+                  descending: true,
+                )
+                .snapshots(),
           ),
         ];
         categoriesSpecific.insertAll(0, othetabs);
