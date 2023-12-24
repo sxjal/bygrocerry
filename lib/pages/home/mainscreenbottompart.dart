@@ -30,12 +30,14 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     return result;
   }
 
-  Widget buildCategory(categoryName) {
+  Widget buildCategory(
+      {required String categoryName, required String categoryId}) {
     print("categoryName $categoryName");
+    print("categoryId $categoryId");
     return Expanded(
       child: Container(
-        width: 300,
-        height: 500, //MediaQuery.of(context).size.height,
+        // width: 300,
+        //height: 200, //MediaQuery.of(context).size.height,
         child: StreamBuilder(
           stream:
               FirebaseFirestore.instance.collection("categories").snapshots(),
@@ -51,6 +53,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               itemBuilder: (ctx, index) {
                 print("prinintg streamsnapshot categoryname");
                 print(categoryName);
+                print(streamSnapshort.data!.docs[index].id);
                 return GridViewWidget(
                   subCollection: categoryName,
                   collection: "categories",
@@ -103,18 +106,28 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
         final categoriesSpecific = snapshot.data!.docs
             .asMap()
-            .map((index, doc) {
-              return MapEntry(
-                index,
-                buildCategory(
-                  doc["categoryName"].toString(),
-                ),
-              );
-            })
+            .map(
+              (index, doc) {
+                return MapEntry(
+                  index,
+                  buildCategory(
+                    categoryName: doc["categoryName"].toString(),
+                    categoryId: doc["categoryId"].toString(),
+                  ),
+                );
+              },
+            )
             .values
             .toList();
 
-        var othetabs = [Text("BestSells"), Text("All Products")];
+        var othetabs = [
+          Text(
+            "All products",
+          ),
+          Text(
+            "BestSells",
+          ),
+        ];
         categoriesSpecific.insertAll(0, othetabs);
 
         return DefaultTabController(

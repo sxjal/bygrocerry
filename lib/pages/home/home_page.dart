@@ -9,6 +9,8 @@ import 'package:bygrocerry/widgets/build_drawer.dart';
 import 'package:bygrocerry/widgets/grid_view_widget.dart';
 import 'package:bygrocerry/widgets/single_product.dart';
 
+//not using this thing
+
 late UserModel userModel;
 
 Size? size;
@@ -299,12 +301,6 @@ class Categories extends StatelessWidget {
         margin: EdgeInsets.all(12.0),
         width: size!.width / 2 - 20,
         decoration: BoxDecoration(
-          // image: DecorationImage(
-          //   fit: BoxFit.cover,
-          //   image: NetworkImage(
-          //     image,
-          //   ),
-          // ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(

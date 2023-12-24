@@ -25,8 +25,8 @@ class _GridViewWidgetState extends State<GridViewWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection(widget.collection)
-          .doc(widget.id)
+          .collection('categories')
+          .doc()
           .collection(widget.subCollection)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {
