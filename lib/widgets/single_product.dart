@@ -45,6 +45,28 @@ class _SingleProductState extends State<SingleProduct> {
   bool cartAdded = false;
   bool isFavorite = false;
 
+  int quantity = 1;
+
+  void quantityFuntion(productId) {
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("userCart")
+        .doc(productId)
+        .update({
+      "productQuantity": quantity,
+    });
+  }
+
+  void deleteProductFuntion(productId) {
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("userCart")
+        .doc(productId)
+        .delete();
+  }
+
   Widget buildimage() {
     final Uri? uri = Uri.tryParse(widget.productImage);
 
@@ -93,6 +115,12 @@ class _SingleProductState extends State<SingleProduct> {
                   {
                     setState(() {
                       cartAdded = true;
+                    }),
+                  }
+                else
+                  {
+                    setState(() {
+                      cartAdded = false;
                     }),
                   }
               }
@@ -334,6 +362,20 @@ class _SingleProductState extends State<SingleProduct> {
                               GestureDetector(
                                 onTap: () {
                                   print("remove from cart");
+                                  if (quantity > 1) {
+                                    setState(() {
+                                      quantity--;
+                                      quantityFuntion(widget.productId);
+                                    });
+                                  } else if (quantity == 1) {
+                                    deleteProductFuntion(widget.productId);
+                                    setState(() {
+                                      cartAdded = false;
+                                      deleteProductFuntion(widget.productId);
+                                    });
+                                  } else {
+                                    print("error");
+                                  }
                                 },
                                 child: Icon(
                                   Icons.remove,
