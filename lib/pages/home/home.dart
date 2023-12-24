@@ -1,4 +1,4 @@
-import 'package:bygrocerry/pages/cartPage/cart_page.dart';
+import 'package:bygrocerry/pages/checkout/check_out_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bygrocerry/model/user_model.dart';
@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => CartPage(),
+                builder: (context) => CheckOutPage(),
               ),
             );
           });
