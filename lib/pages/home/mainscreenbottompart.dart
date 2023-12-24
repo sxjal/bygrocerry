@@ -36,33 +36,38 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     print("categoryId $categoryId");
     return Expanded(
       child: Container(
+        child: GridViewWidget(
+          subCollection: categoryName,
+          collection: "categories",
+          id: categoryId,
+        ),
         // width: 300,
         //height: 200, //MediaQuery.of(context).size.height,
-        child: StreamBuilder(
-          stream:
-              FirebaseFirestore.instance.collection("categories").snapshots(),
-          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
-            if (!streamSnapshort.hasData) {
-              return Center(child: const CircularProgressIndicator());
-            }
-            print("inside streambuilder");
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
-              physics: BouncingScrollPhysics(),
-              itemCount: streamSnapshort.data!.docs.length,
-              itemBuilder: (ctx, index) {
-                print("prinintg streamsnapshot categoryname");
-                print(categoryName);
-                print(streamSnapshort.data!.docs[index].id);
-                return GridViewWidget(
-                  subCollection: categoryName,
-                  collection: "categories",
-                  id: streamSnapshort.data!.docs[index].id,
-                );
-              },
-            );
-          },
-        ),
+        // child: StreamBuilder(
+        //   stream:
+        //       FirebaseFirestore.instance.collection("categories").snapshots(),
+        //   builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
+        //     if (!streamSnapshort.hasData) {
+        //       return Center(child: const CircularProgressIndicator());
+        //     }
+        //     print("inside streambuilder");
+        //     return ListView.builder(
+        //       scrollDirection: Axis.vertical,
+        //       physics: BouncingScrollPhysics(),
+        //       itemCount: streamSnapshort.data!.docs.length,
+        //       itemBuilder: (ctx, index) {
+        //         print("prinintg streamsnapshot categoryname");
+        //         print(categoryName);
+        //         print(streamSnapshort.data!.docs[index].id);
+        //         return GridViewWidget(
+        //           subCollection: categoryName,
+        //           collection: "categories",
+        //           id: streamSnapshort.data!.docs[index].id,
+        //         );
+        //       },
+        //     );
+        //   },
+        // ),
       ),
     );
   }
