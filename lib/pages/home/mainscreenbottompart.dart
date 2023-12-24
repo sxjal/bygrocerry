@@ -134,13 +134,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                                 children: [
                                   Text("Have any questions?"),
                                   TextButton(
-                                    onPressed: () {
-                                      _scrollController.animateTo(
-                                        0.0,
-                                        duration: Duration(seconds: 1),
-                                        curve: Curves.fastOutSlowIn,
-                                      );
-                                    },
+                                    onPressed: () {},
                                     child: Text("Read our FAQs"),
                                   ),
                                   IconButton(
