@@ -47,8 +47,8 @@ class _SingleProductState extends State<SingleProduct> {
 
   int quantity = 1;
 
-  void quantityFuntion(productId) {
-    FirebaseFirestore.instance
+  void quantityFuntion(productId) async {
+    await FirebaseFirestore.instance
         .collection("cart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("userCart")
@@ -113,6 +113,7 @@ class _SingleProductState extends State<SingleProduct> {
               {
                 if (value.exists)
                   {
+                    quantity = value.get("productQuantity"),
                     setState(() {
                       cartAdded = true;
                     }),
@@ -384,7 +385,7 @@ class _SingleProductState extends State<SingleProduct> {
                                 ),
                               ),
                               Text(
-                                "2",
+                                quantity.toString(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -408,8 +409,8 @@ class _SingleProductState extends State<SingleProduct> {
                           ),
                         )
                       : GestureDetector(
-                          onTap: () {
-                            FirebaseFirestore.instance
+                          onTap: () async {
+                            await FirebaseFirestore.instance
                                 .collection("cart")
                                 .doc(FirebaseAuth.instance.currentUser!.uid)
                                 .collection("userCart")
