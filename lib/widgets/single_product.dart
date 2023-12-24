@@ -363,7 +363,6 @@ class _SingleProductState extends State<SingleProduct> {
                         )
                       : GestureDetector(
                           onTap: () {
-                            print("add to card");
                             FirebaseFirestore.instance
                                 .collection("cart")
                                 .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -381,6 +380,9 @@ class _SingleProductState extends State<SingleProduct> {
                                 "productCategory": widget.productCategory,
                               },
                             );
+                            setState(() {
+                              cartAdded = true;
+                            });
                           },
                           child: Container(
                             width: 60,
