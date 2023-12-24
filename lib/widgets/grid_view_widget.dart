@@ -6,14 +6,13 @@ import 'single_product.dart';
 
 class GridViewWidget extends StatefulWidget {
   final String id;
-  final String collection;
+
   final String subCollection;
 
   const GridViewWidget({
     Key? key,
     required this.subCollection,
     required this.id,
-    required this.collection,
   }) : super(key: key);
 
   @override
@@ -26,7 +25,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('categories')
-          .doc()
+          .doc(widget.id)
           .collection(widget.subCollection)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {

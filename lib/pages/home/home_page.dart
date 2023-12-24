@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                           builder: (context) => GridViewWidget(
                             subCollection: streamSnapshort.data!.docs[index]
                                 ["categoryName"],
-                            collection: "categories",
+                            //   collection: "categories",
                             id: streamSnapshort.data!.docs[index].id,
                           ),
                         ),
