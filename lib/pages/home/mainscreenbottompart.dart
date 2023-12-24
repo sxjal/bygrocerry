@@ -14,9 +14,9 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
   var categoryStream =
       FirebaseFirestore.instance.collection("categories").snapshots();
-
   var productStream =
       FirebaseFirestore.instance.collection("products").snapshots();
+  
   //get the length of the stream
   String query = "";
   var result;
