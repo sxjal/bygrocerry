@@ -38,10 +38,8 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
-  bool cartAdded = false;
+  bool cartAdded = true;
   bool isFavorite = false;
-  bool overflowing = false;
-  bool readmore = false;
 
   Widget buildimage() {
     final Uri? uri = Uri.tryParse(widget.productImage);
@@ -291,47 +289,122 @@ class _SingleProductState extends State<SingleProduct> {
           //     ),
           //   ],
           // ),
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * .20,
-                height: MediaQuery.of(context).size.width * .20,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(widget.productImage),
-                  ),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).size.width * .18,
-                left: (MediaQuery.of(context).size.width * .18) / 2,
-                child: Container(
-                  width: 50,
-                  height: 50, //MediaQuery.of(context).size.width * .05,
+          Container(
+            width: MediaQuery.of(context).size.width * .35,
+            height: MediaQuery.of(context).size.width * .35,
+            child: Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width * .30,
+                  height: MediaQuery.of(context).size.width * .30,
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(64, 175, 110, 1),
-                    //borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      Text("Add"),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 8,
-                          ),
-                        ],
-                      ),
-                    ],
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(widget.productImage),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-              ),
-            ],
+                Positioned(
+                  //top: MediaQuery.of(context).size.width * .02 - 50,
+                  left: MediaQuery.of(context).size.width * .075,
+                  bottom: MediaQuery.of(context).size.width * .02,
+                  //     height: 10,
+                  //bottom: 50,
+                  child: cartAdded
+                      ? Container(
+                          width: 70,
+                          height: 20, //MediaQuery.of(context).size.width * .05,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(64, 175, 110, 1),
+                            //borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  print("remove from cart");
+                                },
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                  size: 10,
+                                ),
+                              ),
+                              Text(
+                                "2",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  print("add to cart");
+                                },
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                  size: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            print("add to card");
+                          },
+                          child: Container(
+                            width: 60,
+                            height: 25,
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(252, 219, 213, 1),
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Color.fromRGBO(232, 42, 4, 1),
+                                width: .5,
+                              ),
+                              //borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Row(
+                                //  mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  //   Spacer(),
+                                  Center(
+                                    child: Text(
+                                      "Add",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 222, 61, 61),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.add,
+                                        color: Color.fromARGB(255, 222, 61, 61),
+                                        size: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
