@@ -38,6 +38,7 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
+  bool cartAdded = false;
   bool isFavorite = false;
 
   Widget buildimage() {
@@ -173,9 +174,10 @@ class _SingleProductState extends State<SingleProduct> {
                         .doc(widget.productId);
 
                     DocumentSnapshot docSnap = await docRef.get();
-                    if (docSnap.exists)
+                    if (docSnap.exists) {
                       print('Product is already in the cart');
-                    else
+                    } else {
+                      cartAdded = true;
                       docRef.set(
                         {
                           "productId": widget.productId,
@@ -188,6 +190,7 @@ class _SingleProductState extends State<SingleProduct> {
                           "productCategory": widget.productCategory,
                         },
                       );
+                    }
                     RoutingPage.goTonext(
                       context: context,
                       navigateTo: CheckOutPage(),
@@ -202,7 +205,9 @@ class _SingleProductState extends State<SingleProduct> {
                       borderRadius: BorderRadius.circular(50),
                     ),
                     child: Icon(
-                      CupertinoIcons.cart_fill,
+                      cartAdded
+                          ? CupertinoIcons.cart_fill
+                          : CupertinoIcons.cart,
                       size: 14,
                       color: const Color.fromARGB(255, 0, 0, 0),
                     ),

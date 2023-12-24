@@ -88,6 +88,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                     ),
                   );
                 },
+                productDescription: data["productDescription"],
                 productId: data["productId"],
                 productCategory: data["productCategory"],
                 productRate: data["productRate"],
