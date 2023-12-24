@@ -47,10 +47,11 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     );
   }
 
-  Widget buildProduct(
-      {required Stream<QuerySnapshot<Map<String, dynamic>>>? stream}) {
+  Widget buildProduct({
+    required Stream<QuerySnapshot<Map<String, dynamic>>>? stream,
+  }) {
     return Container(
-      height: 200,
+      // height: 200,
       child: StreamBuilder(
         stream: stream,
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
@@ -65,6 +66,11 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               var varData = searchFunction(query, streamSnapshort.data!.docs);
               var data = varData[index];
               // var data = streamSnapshort.data!.docs[index];
+              print("length");
+              print(streamSnapshort.data!.docs.length);
+
+              print("data");
+              print(data['productName']);
               return SingleProduct(
                 onTap: () {
                   RoutingPage.goTonext(
