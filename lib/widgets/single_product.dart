@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:bygrocerry/pages/provider/favorite_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+// import 'package:provider/provider.dart';
+// import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 
 class SingleProduct extends StatefulWidget {
   final productId;
@@ -42,7 +43,7 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
+    //  FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
 
     // FirebaseFirestore.instance
     //     .collection("favorite")
@@ -95,9 +96,41 @@ class _SingleProductState extends State<SingleProduct> {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            Spacer(),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .05,
+            ),
             //contains the name, category and price
-            Column(),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "very veruy very long text", //  widget.productName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  widget.productCategory,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  "\₹${widget.productPrice}",
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
+            ),
             Spacer(),
             //contains the card icon on the top and favorite on the bottom
             Column(),
