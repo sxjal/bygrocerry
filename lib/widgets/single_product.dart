@@ -393,6 +393,10 @@ class _SingleProductState extends State<SingleProduct> {
                               GestureDetector(
                                 onTap: () {
                                   print("add to cart");
+                                  setState(() {
+                                    quantity++;
+                                    quantityFuntion(widget.productId);
+                                  });
                                 },
                                 child: Icon(
                                   Icons.add,
