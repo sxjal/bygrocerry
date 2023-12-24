@@ -4,7 +4,6 @@ import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +106,7 @@ class _SingleProductState extends State<SingleProduct> {
       ),
       padding: EdgeInsets.symmetric(
         horizontal: 15.0,
-        vertical: 10.0,
+        vertical: 15.0,
       ),
 
       decoration: BoxDecoration(
