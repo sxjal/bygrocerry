@@ -1,10 +1,12 @@
 import 'package:bygrocerry/pages/checkout/checkout.dart';
+import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 // import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 
@@ -50,27 +52,27 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-    //  FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
+    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
 
-    // FirebaseFirestore.instance
-    //     .collection("favorite")
-    //     .doc(FirebaseAuth.instance.currentUser?.uid)
-    //     .collection("userFavorite")
-    //     .doc(widget.productId)
-    //     .get()
-    //     .then(
-    //       (value) => {
-    //         if (this.mounted)
-    //           {
-    //             if (value.exists)
-    //               {
-    //                 setState(() {
-    //                   isFavorite = value.get("productFavorite");
-    //                 }),
-    //               }
-    //           }
-    //       },
-    //     );
+    FirebaseFirestore.instance
+        .collection("favorite")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("userFavorite")
+        .doc(widget.productId)
+        .get()
+        .then(
+          (value) => {
+            if (this.mounted)
+              {
+                if (value.exists)
+                  {
+                    setState(() {
+                      isFavorite = value.get("productFavorite");
+                    }),
+                  }
+              }
+          },
+        );
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -163,24 +165,29 @@ class _SingleProductState extends State<SingleProduct> {
             Column(
               children: [
                 GestureDetector(
-                  onTap: () {
-                    FirebaseFirestore.instance
+                  onTap: () async {
+                    DocumentReference docRef = FirebaseFirestore.instance
                         .collection("cart")
                         .doc(FirebaseAuth.instance.currentUser!.uid)
                         .collection("userCart")
-                        .doc(widget.productId)
-                        .set(
-                      {
-                        "productId": widget.productId,
-                        "productImage": widget.productImage,
-                        "productName": widget.productName,
-                        "productPrice": widget.productPrice,
-                        "productOldPrice": widget.productPrice,
-                        "productDescription": widget.productDescription,
-                        "productQuantity": 1,
-                        "productCategory": widget.productCategory,
-                      },
-                    );
+                        .doc(widget.productId);
+
+                    DocumentSnapshot docSnap = await docRef.get();
+                    if (docSnap.exists)
+                      print('Product is already in the cart');
+                    else
+                      docRef.set(
+                        {
+                          "productId": widget.productId,
+                          "productImage": widget.productImage,
+                          "productName": widget.productName,
+                          "productPrice": widget.productPrice,
+                          "productOldPrice": widget.productPrice,
+                          "productDescription": widget.productDescription,
+                          "productQuantity": 1,
+                          "productCategory": widget.productCategory,
+                        },
+                      );
                     RoutingPage.goTonext(
                       context: context,
                       navigateTo: CheckOutPage(),
