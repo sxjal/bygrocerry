@@ -4,8 +4,12 @@
 // import 'package:bygrocerry/route/routing_page.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bygrocerry/pages/provider/cart_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 // import 'package:bygrocerry/pages/provider/favorite_provider.dart';
@@ -38,7 +42,7 @@ class SingleProduct extends StatefulWidget {
 }
 
 class _SingleProductState extends State<SingleProduct> {
-  bool cartAdded = true;
+  bool cartAdded = false;
   bool isFavorite = false;
 
   Widget buildimage() {
@@ -74,26 +78,26 @@ class _SingleProductState extends State<SingleProduct> {
     //       },
     //     );
 
-    // CartProvider cartProvider = Provider.of<CartProvider>(context);
-    // FirebaseFirestore.instance
-    //     .collection("cart")
-    //     .doc(FirebaseAuth.instance.currentUser?.uid)
-    //     .collection("userCart")
-    //     .doc(widget.productId)
-    //     .get()
-    //     .then(
-    //       (value) => {
-    //         if (this.mounted)
-    //           {
-    //             if (value.exists)
-    //               {
-    //                 setState(() {
-    //                   cartAdded = true;
-    //                 }),
-    //               }
-    //           }
-    //       },
-    //     );
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("userCart")
+        .doc(widget.productId)
+        .get()
+        .then(
+          (value) => {
+            if (this.mounted)
+              {
+                if (value.exists)
+                  {
+                    setState(() {
+                      cartAdded = true;
+                    }),
+                  }
+              }
+          },
+        );
 
     return Container(
       width: double.infinity,
@@ -360,6 +364,23 @@ class _SingleProductState extends State<SingleProduct> {
                       : GestureDetector(
                           onTap: () {
                             print("add to card");
+                            FirebaseFirestore.instance
+                                .collection("cart")
+                                .doc(FirebaseAuth.instance.currentUser!.uid)
+                                .collection("userCart")
+                                .doc(widget.productId)
+                                .set(
+                              {
+                                "productId": widget.productId,
+                                "productImage": widget.productImage,
+                                "productName": widget.productName,
+                                "productPrice": widget.productPrice,
+                                "productOldPrice": widget.productPrice,
+                                "productDescription": widget.productDescription,
+                                "productQuantity": 1,
+                                "productCategory": widget.productCategory,
+                              },
+                            );
                           },
                           child: Container(
                             width: 60,
