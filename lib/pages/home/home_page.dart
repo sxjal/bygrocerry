@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
         .then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-         
           userModel = UserModel.fromDocument(documentSnapshot);
         } else {
           print("Document does not exist in the database");
@@ -137,6 +136,7 @@ class _HomePageState extends State<HomePage> {
                 productPrice: data["productPrice"],
                 productImage: data["productImage"],
                 productName: data["productName"],
+                productDescription: data["productDescription"],
               );
             },
           );
@@ -264,6 +264,8 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     );
                                   },
+                                  productDescription:
+                                      data["productDescription"],
                                   productId: data["productId"],
                                   productCategory: data["productCategory"],
                                   productRate: data["productRate"],

@@ -1,4 +1,5 @@
 import 'package:bygrocerry/pages/checkout/checkout.dart';
+import 'package:bygrocerry/pages/provider/cart_provider.dart';
 import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,7 +55,6 @@ class _SingleProductState extends State<SingleProduct> {
   @override
   Widget build(BuildContext context) {
     FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
-
     FirebaseFirestore.instance
         .collection("favorite")
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -69,6 +69,27 @@ class _SingleProductState extends State<SingleProduct> {
                   {
                     setState(() {
                       isFavorite = value.get("productFavorite");
+                    }),
+                  }
+              }
+          },
+        );
+
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("userCart")
+        .doc(widget.productId)
+        .get()
+        .then(
+          (value) => {
+            if (this.mounted)
+              {
+                if (value.exists)
+                  {
+                    setState(() {
+                      cartAdded = true;
                     }),
                   }
               }
@@ -232,19 +253,7 @@ class _SingleProductState extends State<SingleProduct> {
             ),
           ],
         ),
-        //   Row(
-        //     children: [
-        //       Container(
-        //         decoration: BoxDecoration(
-        //           image: DecorationImage(
-        //             fit: BoxFit.cover,
-        //             image: NetworkImage(widget.productImage),
-        //           ),
-        //           borderRadius: BorderRadius.circular(20),
-        //         ),
-        //         child: IconButton(
-        //           highlightColor: Colors.transparent,
-        //           splashColor: Colors.transparent,
+
         //           onPressed: () {
         //             setState(
         //               () {
@@ -268,34 +277,6 @@ class _SingleProductState extends State<SingleProduct> {
         //               },
         //             );
         //           },
-        //           icon: Icon(
-        //             isFavorite ? Icons.favorite : Icons.favorite_border,
-        //             color: Colors.pink[700],
-        //           ),
-        //         ),
-        //       ),
-        //       Row(
-        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //         children: [
-        //           Text(
-        //             widget.productName,
-        //             style: TextStyle(
-        //               fontWeight: FontWeight.normal,
-        //             ),
-        //           ),
-        //           SizedBox(
-        //             width: 20,
-        //           ),
-        //           Text(
-        //             "\₹${widget.productPrice}",
-        //             style: TextStyle(
-        //               fontWeight: FontWeight.bold,
-        //             ),
-        //           ),
-        //         ],
-        //       )
-        //     ],
-        //   ),
       ),
     );
   }
