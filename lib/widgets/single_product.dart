@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:provider/provider.dart';
@@ -105,9 +106,10 @@ class _SingleProductState extends State<SingleProduct> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Flexible(
+                Container(
+                  width: 5,
                   child: FittedBox(
-                    fit: BoxFit.scaleDown,
+                    fit: BoxFit.fitWidth,
                     child: Text(
                       "very veruy very long text", //  widget.productName,
                       maxLines: 1,
@@ -155,23 +157,25 @@ class _SingleProductState extends State<SingleProduct> {
             Column(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width * .10,
-                  height: MediaQuery.of(context).size.width * .10,
+                  padding: EdgeInsets.all(10),
+                  //   width: MediaQuery.of(context).size.width * .15,
+                  //  height: MediaQuery.of(context).size.width * .15,
                   decoration: BoxDecoration(
-                    color: Color.fromRGBO(64, 175, 110, 1),
-                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromRGBO(254, 205, 67, 1),
+                    borderRadius: BorderRadius.circular(50),
                   ),
                   child: Icon(
-                    Icons.add,
-                    color: Colors.white,
+                    CupertinoIcons.cart_fill,
+                    size: 14,
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.width * .05,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * .10,
-                  height: MediaQuery.of(context).size.width * .10,
+                  width: MediaQuery.of(context).size.width * .08,
+                  height: MediaQuery.of(context).size.width * .08,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(64, 175, 110, 1),
                     borderRadius: BorderRadius.circular(10),
