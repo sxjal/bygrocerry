@@ -1,12 +1,12 @@
-import 'package:bygrocerry/pages/checkout/checkout.dart';
-import 'package:bygrocerry/pages/provider/cart_provider.dart';
-import 'package:bygrocerry/pages/provider/favorite_provider.dart';
-import 'package:bygrocerry/route/routing_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:bygrocerry/pages/checkout/checkout.dart';
+// import 'package:bygrocerry/pages/provider/cart_provider.dart';
+// import 'package:bygrocerry/pages/provider/favorite_provider.dart';
+// import 'package:bygrocerry/route/routing_page.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 // import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 
