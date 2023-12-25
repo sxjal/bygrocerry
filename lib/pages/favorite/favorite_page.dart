@@ -10,11 +10,17 @@ class FavoritePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return GridViewWidget(
-    //   //   collection: "favorite",
-    //   subCollection: "userFavorite",
-    //   id: FirebaseAuth.instance.currentUser!.uid,
-    // );
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(64, 190, 117, 1),
+        title: Text("Favorites"),
+        leading: Icon(
+          Icons.favorite,
+          color: Colors.white70,
+        ),
+      ),
+      body: Container(),
+    );
   }
 }
