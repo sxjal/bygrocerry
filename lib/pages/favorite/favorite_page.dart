@@ -37,7 +37,7 @@ class _FavoritePageState extends State<FavoritePage> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {
           if (!snapshort.hasData) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Text("No data"),
             );
           }
 
