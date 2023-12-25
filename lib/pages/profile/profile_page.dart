@@ -1,14 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:bygrocerry/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/my_button.dart';
-
-late UserModel userModel;
 
 class ProfilePage extends StatefulWidget {
   static Pattern pattern =
