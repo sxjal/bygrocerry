@@ -101,58 +101,8 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                     height: 10,
                   ),
                   index == streamSnapshort.data!.docs.length - 1
-                      ? Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              Divider(
-                                thickness: 2,
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.01,
-                              ),
-                              Text(
-                                "You've reached the end of this category",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color:
-                                      const Color.fromARGB(255, 185, 185, 185),
-                                ),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.005,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Have any questions?"),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text("Read our FAQs"),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      _scrollController.animateTo(
-                                        0.0,
-                                        duration: Duration(seconds: 1),
-                                        curve: Curves.easeInOut,
-                                      );
-                                    },
-                                    icon: Icon(Icons.arrow_upward),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.01,
-                              ),
-                            ],
-                          ),
-                        )
-                      : SizedBox(), //Text("sa"),
+                      ? endofcategory(scrollController: _scrollController)
+                      : SizedBox(),
                 ],
               );
             },
@@ -224,7 +174,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
           buildProduct(
             stream: FirebaseFirestore.instance
                 .collection("products")
-                .where("productRate", isGreaterThan: 4)
+                .where("productRate", isGreaterThanOrEqualTo: 4)
                 .orderBy(
                   "productRate",
                   descending: true,
@@ -259,6 +209,67 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
           ),
         );
       },
+    );
+  }
+}
+
+class endofcategory extends StatelessWidget {
+  const endofcategory({
+    Key? key,
+    required ScrollController scrollController,
+  })  : _scrollController = scrollController,
+        super(key: key);
+
+  final ScrollController _scrollController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          Divider(
+            thickness: 2,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
+          ),
+          Text(
+            "You've reached the end of this category",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 185, 185, 185),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.005,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Have any questions?"),
+              TextButton(
+                onPressed: () {},
+                child: Text("Read our FAQs"),
+              ),
+              IconButton(
+                onPressed: () {
+                  _scrollController.animateTo(
+                    0.0,
+                    duration: Duration(seconds: 1),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                icon: Icon(Icons.arrow_upward),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.01,
+          ),
+        ],
+      ),
     );
   }
 }

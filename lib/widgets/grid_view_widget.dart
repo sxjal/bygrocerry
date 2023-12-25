@@ -1,3 +1,4 @@
+import 'package:bygrocerry/pages/home/mainscreenbottompart.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
@@ -20,6 +21,7 @@ class GridViewWidget extends StatefulWidget {
 }
 
 class _GridViewWidgetState extends State<GridViewWidget> {
+  ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -44,30 +46,42 @@ class _GridViewWidgetState extends State<GridViewWidget> {
               itemBuilder: (ctx, index) {
                 var data = snapshort.data!.docs[index];
 
-                return SingleProduct(
-                  onTap: () {
-                    RoutingPage.goTonext(
-                      context: context,
-                      navigateTo: DetailsPage(
-                        productCategory: data["productCategory"],
-                        productId: data["productId"],
-                        productImage: data["productImage"],
-                        productName: data["productName"],
-                        productOldPrice: data["productOldPrice"],
-                        productPrice: data["productPrice"],
-                        productRate: data["productRate"],
-                        productDescription: data["productDescription"],
-                      ),
-                    );
-                  },
-                  productId: data["productId"],
-                  productCategory: data["productCategory"],
-                  productRate: data["productRate"],
-                  productOldPrice: data["productOldPrice"],
-                  productPrice: data["productPrice"],
-                  productImage: data["productImage"],
-                  productName: data["productName"],
-                  productDescription: data["productDescription"],
+                return Column(
+                  children: [
+                    SingleProduct(
+                      onTap: () {
+                        RoutingPage.goTonext(
+                          context: context,
+                          navigateTo: DetailsPage(
+                            productCategory: data["productCategory"],
+                            productId: data["productId"],
+                            productImage: data["productImage"],
+                            productName: data["productName"],
+                            productOldPrice:
+                                (data["productOldPrice"] as num).toDouble(),
+                            productPrice:
+                                (data["productPrice"] as num).toDouble(),
+                            productRate: data["productRate"],
+                            productDescription: data["productDescription"],
+                          ),
+                        );
+                      },
+                      productDescription: data["productDescription"],
+                      productId: data["productId"],
+                      productCategory: data["productCategory"],
+                      productRate: data["productRate"],
+                      productOldPrice: data["productOldPrice"],
+                      productPrice: data["productPrice"],
+                      productImage: data["productImage"],
+                      productName: data["productName"],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    index == snapshort.data!.docs.length - 1
+                        ? endofcategory(scrollController: _scrollController)
+                        : SizedBox(),
+                  ],
                 );
               },
             ),
