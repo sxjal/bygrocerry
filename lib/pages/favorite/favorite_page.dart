@@ -20,7 +20,59 @@ class FavoritePage extends StatelessWidget {
           color: Colors.white70,
         ),
       ),
-      body: Container(),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .03,
+            ),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("products")
+                      .snapshots(),
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshort) {
+                    if (!streamSnapshort.hasData) {
+                      return Center(
+                        child: const CircularProgressIndicator(),
+                      );
+                    }
+                    var varData =
+                        searchFunction(query, streamSnapshort.data!.docs);
+                    return result.isEmpty
+                        ? Center(child: Text("Not Found"))
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: result.length,
+                            itemBuilder: (ctx, index) {
+                              var data = varData[index];
+                              return SingleProduct(
+                                onTap: () {},
+                                productDescription: data["productDescription"],
+                                productId: data["productId"],
+                                productCategory: data["productCategory"],
+                                productRate: data["productRate"],
+                                productOldPrice: data["productOldPrice"],
+                                productPrice: data["productPrice"],
+                                productImage: data["productImage"],
+                                productName: data["productName"],
+                              );
+                            },
+                          );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
