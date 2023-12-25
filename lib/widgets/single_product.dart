@@ -229,18 +229,26 @@ class _SingleProductState extends State<SingleProduct> {
                   top: MediaQuery.of(context).size.width * .02,
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-
-                        FirebaseFirestore.instance
-                            .collection("favorite")
-                            .doc(FirebaseAuth.instance.currentUser?.uid)
-                            .collection("userFavorite")
-                            .doc(widget.productId)
-                            .set({
-                          "productFavorite": isFavorite,
-                        });
-                      });
+                      setState(
+                        () {
+                          isFavorite = !isFavorite;
+                          isFavorite == true
+                              ? FirebaseFirestore.instance
+                                  .collection("favorite")
+                                  .doc(FirebaseAuth.instance.currentUser?.uid)
+                                  .collection("userFavorite")
+                                  .doc(widget.productId)
+                                  .set({
+                                  "productFavorite": true,
+                                })
+                              : FirebaseFirestore.instance
+                                  .collection("favorite")
+                                  .doc(FirebaseAuth.instance.currentUser?.uid)
+                                  .collection("userFavorite")
+                                  .doc(widget.productId)
+                                  .delete();
+                        },
+                      );
                     },
                     child: isFavorite == true
                         ? Icon(
