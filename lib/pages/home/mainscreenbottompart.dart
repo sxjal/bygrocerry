@@ -214,11 +214,20 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
               (index, doc) {
                 return MapEntry(
                   index,
-                  buildCategory(
-                    categoryName: doc["categoryName"].toString(),
-                    //fetch the document id of this category
-                    categoryId: doc.id, //doc["categoryId"].toString(),
+                  buildProduct(
+                    stream: FirebaseFirestore.instance
+                        .collection('categories')
+                        .doc(doc.id)
+                        .collection(
+                          doc["categoryName"].toString(),
+                        )
+                        .snapshots(),
                   ),
+                  // buildCategory(
+                  //   categoryName: doc["categoryName"].toString(),
+                  //   //fetch the document id of this category
+                  //   categoryId: doc.id, //doc["categoryId"].toString(),
+                  // ),
                 );
               },
             )
