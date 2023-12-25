@@ -6,7 +6,7 @@ import 'package:bygrocerry/model/user_model.dart';
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/build_drawer.dart';
-import 'package:bygrocerry/widgets/grid_view_widget.dart';
+// import 'package:bygrocerry/widgets/grid_view_widget.dart';
 import 'package:bygrocerry/widgets/single_product.dart';
 
 //not using this thing
