@@ -70,16 +70,16 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (ctx, index) {
                   return Categories(
                     onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => GridViewWidget(
-                            subCollection: streamSnapshort.data!.docs[index]
-                                ["categoryName"],
-                            //   collection: "categories",
-                            id: streamSnapshort.data!.docs[index].id,
-                          ),
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => GridViewWidget(
+                      //       subCollection: streamSnapshort.data!.docs[index]
+                      //           ["categoryName"],
+                      //       //   collection: "categories",
+                      //       id: streamSnapshort.data!.docs[index].id,
+                      //     ),
+                      //   ),
+                      // );
                     },
                     categoryName: streamSnapshort.data!.docs[index]
                         ["categoryName"],
