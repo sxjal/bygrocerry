@@ -232,7 +232,7 @@ class endofcategory extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.01,
           ),
           Text(
-            "You've reached the end of this category",
+            "You've reached the end of this section",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
