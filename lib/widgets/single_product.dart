@@ -208,21 +208,6 @@ class _SingleProductState extends State<SingleProduct> {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.001,
           ),
-
-          //     Container(
-          //       width: MediaQuery.of(context).size.width * .08,
-          //       height: MediaQuery.of(context).size.width * .08,
-          //       decoration: BoxDecoration(
-          //         color: Color.fromRGBO(64, 175, 110, 1),
-          //         borderRadius: BorderRadius.circular(10),
-          //       ),
-          //       child: Icon(
-          //         Icons.favorite_border,
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   ],
-          // ),
           Container(
             width: MediaQuery.of(context).size.width * .35,
             height: MediaQuery.of(context).size.width * .35,
