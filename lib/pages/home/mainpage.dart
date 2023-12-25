@@ -1,6 +1,8 @@
 import 'package:bygrocerry/model/user_model.dart';
 import 'package:bygrocerry/pages/home/mainscreenbottompart.dart';
 import 'package:bygrocerry/pages/profile/profile_page.dart';
+import 'package:bygrocerry/widgets/single_product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -218,7 +220,56 @@ class _HomePageState extends State<HomePage> {
                                 child: MainScreenBottomPart(),
                               ),
                             )
-                          : Text("Search Results for $query"),
+                          : Container(
+                              child: StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection("products")
+                                    .snapshots(),
+                                builder: (context,
+                                    AsyncSnapshot<QuerySnapshot>
+                                        streamSnapshort) {
+                                  if (!streamSnapshort.hasData) {
+                                    return Center(
+                                        child:
+                                            const CircularProgressIndicator());
+                                  }
+                                  var varData = searchFunction(
+                                      query, streamSnapshort.data!.docs);
+                                  return result.isEmpty
+                                      ? Center(child: Text("Not Found"))
+                                      : GridView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: result.length,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 5.0,
+                                            mainAxisSpacing: 5.0,
+                                            childAspectRatio: 0.6,
+                                          ),
+                                          itemBuilder: (ctx, index) {
+                                            var data = varData[index];
+                                            return SingleProduct(
+                                              onTap: () {},
+                                              productDescription:
+                                                  data["productDescription"],
+                                              productId: data["productId"],
+                                              productCategory:
+                                                  data["productCategory"],
+                                              productRate: data["productRate"],
+                                              productOldPrice:
+                                                  data["productOldPrice"],
+                                              productPrice:
+                                                  data["productPrice"],
+                                              productImage:
+                                                  data["productImage"],
+                                              productName: data["productName"],
+                                            );
+                                          },
+                                        );
+                                },
+                              ),
+                            ),
                     ],
                   ),
                 ),
