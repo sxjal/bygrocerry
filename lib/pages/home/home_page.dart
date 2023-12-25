@@ -6,7 +6,6 @@ import 'package:bygrocerry/model/user_model.dart';
 import 'package:bygrocerry/pages/detailPage/details_page.dart';
 import 'package:bygrocerry/route/routing_page.dart';
 import 'package:bygrocerry/widgets/build_drawer.dart';
-// import 'package:bygrocerry/widgets/grid_view_widget.dart';
 import 'package:bygrocerry/widgets/single_product.dart';
 
 //not using this thing
@@ -69,21 +68,9 @@ class _HomePageState extends State<HomePage> {
                 itemCount: streamSnapshort.data!.docs.length,
                 itemBuilder: (ctx, index) {
                   return Categories(
-                    onTap: () {
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => GridViewWidget(
-                      //       subCollection: streamSnapshort.data!.docs[index]
-                      //           ["categoryName"],
-                      //       //   collection: "categories",
-                      //       id: streamSnapshort.data!.docs[index].id,
-                      //     ),
-                      //   ),
-                      // );
-                    },
+                    onTap: () {},
                     categoryName: streamSnapshort.data!.docs[index]
                         ["categoryName"],
-                    //   image: streamSnapshort.data!.docs[index]["categoryImage"],
                   );
                 },
               );
