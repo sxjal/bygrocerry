@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                     buildProduct(
                       stream: FirebaseFirestore.instance
                           .collection("products")
-                          .where("productRate", isGreaterThan: 4)
+                          .where("productRate", isGreaterThanOrEqualTo: 4)
                           .orderBy(
                             "productRate",
                             descending: true,
