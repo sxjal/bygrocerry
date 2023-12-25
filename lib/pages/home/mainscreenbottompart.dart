@@ -38,11 +38,70 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
     required String categoryId,
   }) {
     return Container(
-      width: 300,
-      height: 200,
-      child: GridViewWidget(
-        subCollection: categoryName,
-        id: categoryId,
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('categories')
+            .doc(categoryId)
+            .collection(categoryName)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {
+          if (!snapshort.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                // shrinkWrap: true,
+                itemCount: snapshort.data!.docs.length,
+                itemBuilder: (ctx, index) {
+                  var data = snapshort.data!.docs[index];
+
+                  return Column(
+                    children: [
+                      SingleProduct(
+                        onTap: () {
+                          RoutingPage.goTonext(
+                            context: context,
+                            navigateTo: DetailsPage(
+                              productCategory: data["productCategory"],
+                              productId: data["productId"],
+                              productImage: data["productImage"],
+                              productName: data["productName"],
+                              productOldPrice:
+                                  (data["productOldPrice"] as num).toDouble(),
+                              productPrice:
+                                  (data["productPrice"] as num).toDouble(),
+                              productRate: data["productRate"],
+                              productDescription: data["productDescription"],
+                            ),
+                          );
+                        },
+                        productDescription: data["productDescription"],
+                        productId: data["productId"],
+                        productCategory: data["productCategory"],
+                        productRate: data["productRate"],
+                        productOldPrice: data["productOldPrice"],
+                        productPrice: data["productPrice"],
+                        productImage: data["productImage"],
+                        productName: data["productName"],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      index == snapshort.data!.docs.length - 1
+                          ? endofcategory(scrollController: _scrollController)
+                          : SizedBox(),
+                    ],
+                  );
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }
