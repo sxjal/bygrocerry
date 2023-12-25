@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         children: [
           HomePage(user: userModel),
-          FavoritePage(user: userModel),
+          FavoritePage(),
           Center(
             child: Text('Order history'),
           ),
