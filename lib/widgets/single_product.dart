@@ -237,6 +237,15 @@ class _SingleProductState extends State<SingleProduct> {
                                   .doc(widget.productId)
                                   .set({
                                   "productFavorite": true,
+                                  "productDescription":
+                                      widget.productDescription,
+                                  "productId": widget.productId,
+                                  "productCategory": widget.productCategory,
+                                  "productRate": widget.productRate,
+                                  "productOldPrice": widget.productOldPrice,
+                                  "productPrice": widget.productPrice,
+                                  "productImage": widget.productImage,
+                                  "productName": widget.productName,
                                 })
                               : FirebaseFirestore.instance
                                   .collection("favorite")
