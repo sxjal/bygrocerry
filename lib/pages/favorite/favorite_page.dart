@@ -19,54 +19,63 @@ class _FavoritePageState extends State<FavoritePage> {
   ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: FirebaseFirestore.instance
-          .collection("favorite")
-          .doc(widget.user.userUid)
-          .collection("userFavorite")
-          .snapshots(),
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {
-        if (!snapshort.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Favorites"),
+        leading: Icon(
+          Icons.favorite,
+          color: Colors.green,
+        ),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection("favorite")
+            .doc(widget.user.userUid)
+            .collection("userFavorite")
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshort) {
+          if (!snapshort.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-        return SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              // shrinkWrap: true,
-              itemCount: snapshort.data!.docs.length,
-              itemBuilder: (ctx, index) {
-                var data = snapshort.data!.docs[index];
+          return SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                // shrinkWrap: true,
+                itemCount: snapshort.data!.docs.length,
+                itemBuilder: (ctx, index) {
+                  var data = snapshort.data!.docs[index];
 
-                return Column(
-                  children: [
-                    SingleProduct(
-                      onTap: () {},
-                      productDescription: data["productDescription"],
-                      productId: data["productId"],
-                      productCategory: data["productCategory"],
-                      productRate: data["productRate"],
-                      productOldPrice: data["productOldPrice"],
-                      productPrice: data["productPrice"],
-                      productImage: data["productImage"],
-                      productName: data["productName"],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    index == snapshort.data!.docs.length - 1
-                        ? endofcategory(scrollController: _scrollController)
-                        : SizedBox(),
-                  ],
-                );
-              },
+                  return Column(
+                    children: [
+                      SingleProduct(
+                        onTap: () {},
+                        productDescription: data["productDescription"],
+                        productId: data["productId"],
+                        productCategory: data["productCategory"],
+                        productRate: data["productRate"],
+                        productOldPrice: data["productOldPrice"],
+                        productPrice: data["productPrice"],
+                        productImage: data["productImage"],
+                        productName: data["productName"],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      index == snapshort.data!.docs.length - 1
+                          ? endofcategory(scrollController: _scrollController)
+                          : SizedBox(),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
