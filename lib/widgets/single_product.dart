@@ -1,18 +1,9 @@
-// import 'package:bygrocerry/pages/checkout/checkout.dart';
-// import 'package:bygrocerry/pages/provider/cart_provider.dart';
-// import 'package:bygrocerry/pages/provider/favorite_provider.dart';
-// import 'package:bygrocerry/route/routing_page.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:bygrocerry/pages/provider/cart_provider.dart';
+import 'package:bygrocerry/pages/provider/favorite_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
-// import 'package:bygrocerry/pages/provider/favorite_provider.dart';
+import 'package:provider/provider.dart';
 
 class SingleProduct extends StatefulWidget {
   final productId;
@@ -79,26 +70,26 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-    // FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
-    // FirebaseFirestore.instance
-    //     .collection("favorite")
-    //     .doc(FirebaseAuth.instance.currentUser?.uid)
-    //     .collection("userFavorite")
-    //     .doc(widget.productId)
-    //     .get()
-    //     .then(
-    //       (value) => {
-    //         if (this.mounted)
-    //           {
-    //             if (value.exists)
-    //               {
-    //                 setState(() {
-    //                   isFavorite = value.get("productFavorite");
-    //                 }),
-    //               }
-    //           }
-    //       },
-    //     );
+    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
+    FirebaseFirestore.instance
+        .collection("favorite")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("userFavorite")
+        .doc(widget.productId)
+        .get()
+        .then(
+          (value) => {
+            if (this.mounted)
+              {
+                if (value.exists)
+                  {
+                    setState(() {
+                      isFavorite = value.get("productFavorite");
+                    }),
+                  }
+              }
+          },
+        );
 
     //CartProvider cartProvider = Provider.of<CartProvider>(context);
     FirebaseFirestore.instance
