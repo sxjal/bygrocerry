@@ -229,7 +229,6 @@ class _SingleProductState extends State<SingleProduct> {
                   top: MediaQuery.of(context).size.width * .02,
                   child: GestureDetector(
                     onTap: () {
-                      print("clicked on favs");
                       setState(
                         () {
                           if (isFavorite == true) {
@@ -251,9 +250,15 @@ class _SingleProductState extends State<SingleProduct> {
                         },
                       );
                     },
-                    child: Icon(
-                      Icons.favorite,
-                    ),
+                    child: isFavorite == true
+                        ? Icon(
+                            Icons.favorite,
+                            color: Color.fromARGB(255, 222, 61, 61),
+                          )
+                        : Icon(
+                            Icons.favorite_border,
+                            color: Color.fromARGB(255, 222, 61, 61),
+                          ),
                   ),
                 ),
                 Positioned(
