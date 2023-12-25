@@ -21,10 +21,11 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(64, 190, 117, 1),
         title: Text("Favorites"),
         leading: Icon(
           Icons.favorite,
-          color: Colors.green,
+          color: Color.fromARGB(255, 222, 61, 61),
         ),
       ),
       body: StreamBuilder(
