@@ -51,7 +51,6 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
             itemBuilder: (ctx, index) {
               var varData = searchFunction(query, streamSnapshort.data!.docs);
               var data = varData[index];
-              // var data = streamSnapshort.data!.docs[index];
 
               return Column(
                 children: [
@@ -157,13 +156,21 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
 
         var othetabs = [
           buildProduct(
-            stream:
-                FirebaseFirestore.instance.collection("products").snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection(
+                  "products",
+                )
+                .snapshots(),
           ),
           buildProduct(
             stream: FirebaseFirestore.instance
-                .collection("products")
-                .where("productRate", isGreaterThanOrEqualTo: 4)
+                .collection(
+                  "products",
+                )
+                .where(
+                  "productRate",
+                  isGreaterThanOrEqualTo: 4,
+                )
                 .orderBy(
                   "productRate",
                   descending: true,
@@ -171,6 +178,7 @@ class MainScreenBottomPartState extends State<MainScreenBottomPart> {
                 .snapshots(),
           ),
         ];
+
         categoriesSpecific.insertAll(0, othetabs);
 
         return DefaultTabController(
