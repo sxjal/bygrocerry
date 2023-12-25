@@ -241,16 +241,9 @@ class _HomePageState extends State<HomePage> {
                                         query, streamSnapshort.data!.docs);
                                     return result.isEmpty
                                         ? Center(child: Text("Not Found"))
-                                        : GridView.builder(
+                                        : ListView.builder(
                                             shrinkWrap: true,
                                             itemCount: result.length,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 5.0,
-                                              mainAxisSpacing: 5.0,
-                                              childAspectRatio: 0.6,
-                                            ),
                                             itemBuilder: (ctx, index) {
                                               var data = varData[index];
                                               return SingleProduct(
