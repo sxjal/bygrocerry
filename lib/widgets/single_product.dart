@@ -70,7 +70,6 @@ class _SingleProductState extends State<SingleProduct> {
 
   @override
   Widget build(BuildContext context) {
-    FavoriteProvider favoriteProvider = Provider.of<FavoriteProvider>(context);
     FirebaseFirestore.instance
         .collection("favorite")
         .doc(FirebaseAuth.instance.currentUser?.uid)
