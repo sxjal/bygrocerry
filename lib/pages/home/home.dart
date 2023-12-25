@@ -1,4 +1,5 @@
 import 'package:bygrocerry/pages/checkout/check_out_page.dart';
+import 'package:bygrocerry/pages/favorite/favorite_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bygrocerry/model/user_model.dart';
@@ -132,9 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: controller,
         children: [
           HomePage(user: userModel),
-          Center(
-            child: Text('Favorites'),
-          ),
+          FavoritePage(user: userModel),
           Center(
             child: Text('Order history'),
           ),

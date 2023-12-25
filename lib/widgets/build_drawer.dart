@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bygrocerry/pages/cartPage/cart_page.dart';
-import 'package:bygrocerry/pages/favorite/favorite_page.dart';
+// import 'package:bygrocerry/pages/favorite/favorite_page.dart';
 import 'package:bygrocerry/pages/home/home_page.dart';
 import 'package:bygrocerry/pages/login/login_page.dart';
 import 'package:bygrocerry/pages/profile/profile_page.dart';
@@ -49,18 +49,18 @@ class BuildDrawer extends StatelessWidget {
             ),
             title: Text("Cart"),
           ),
-          ListTile(
-            onTap: () {
-              RoutingPage.goTonext(
-                context: context,
-                navigateTo: FavoritePage(),
-              );
-            },
-            leading: Icon(
-              Icons.favorite,
-            ),
-            title: Text("Favorite"),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     RoutingPage.goTonext(
+          //       context: context,
+          //       navigateTo: FavoritePage(),
+          //     );
+          //   },
+          //   leading: Icon(
+          //     Icons.favorite,
+          //   ),
+          //   title: Text("Favorite"),
+          // ),
           ListTile(
             leading: Icon(
               Icons.shopping_basket_sharp,
