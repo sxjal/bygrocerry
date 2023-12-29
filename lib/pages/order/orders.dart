@@ -16,6 +16,7 @@ class _OrdersPageState extends State<OrdersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromRGBO(64, 190, 117, 1),
         title: Text('Orders'),
       ),
       body: FutureBuilder<DatabaseEvent>(
@@ -32,7 +33,7 @@ class _OrdersPageState extends State<OrdersPage> {
           }
 
           if (!snapshot.hasData || snapshot.data!.snapshot.value == null) {
-            return Text("No orders yet");
+            return Center(child: Text("No orders yet"));
           }
 
           // Parse the orders
