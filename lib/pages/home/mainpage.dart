@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                               height: MediaQuery.of(context).size.height * .01,
                             ),
                             Text(
-                              widget.user.fullName,
+                              "Kunal Kumar", //  widget.user.fullName,
                               style: GoogleFonts.montserrat(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
