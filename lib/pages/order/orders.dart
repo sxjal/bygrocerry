@@ -1,55 +1,187 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:bygrocerriesadminpanel/orderdetailspage.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class OrdersPage extends StatefulWidget {
-  @override
-  _OrdersPageState createState() => _OrdersPageState();
-}
+class OrdersPage extends StatelessWidget {
+  OrdersPage({Key? key}) : super(key: key);
 
-class _OrdersPageState extends State<OrdersPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance; // Firebase Auth instance
-  final databaseRef =
-      FirebaseDatabase.instance.ref(); //database reference object
+  final databaseReference = FirebaseDatabase.instance.ref();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(64, 190, 117, 1),
-        title: Text('Orders'),
+        title: const Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Orders',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
-      body: FutureBuilder<DatabaseEvent>(
-        future: databaseRef
-            .child('orders')
-            .orderByChild('userId')
-            .equalTo(_auth.currentUser!.uid)
-            .once(),
-        builder: (context, snapshot) {
+      body: StreamBuilder<DatabaseEvent>(
+        stream: databaseReference.child('orders').onValue,
+        builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              Map<dynamic, dynamic>? values =
+                  snapshot.data!.snapshot.value as Map<dynamic, dynamic>?;
+              if (values == null) {
+                return Container(); // or return a widget to indicate no orders
+              } else {
+                return Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.builder(
+                    itemCount: values.length,
+                    itemBuilder: (ctx, i) {
+                      var keys = values.keys.toList()
+                        ..sort((a, b) => b.compareTo(a));
+                      var order = values[keys[i]];
+                      var status = order['Status'];
 
-          if (!snapshot.hasData || snapshot.data!.snapshot.value == null) {
-            return Center(child: Text("No orders yet"));
-          }
+                      Color color = Colors.orange;
+                      if (status == "OPEN") {
+                        color = const Color.fromARGB(255, 255, 182, 64);
+                      } else if (status == "CLOSED") {
+                        color = Colors.green;
+                      } else if (status == "RETURNED") {
+                        color = Colors.red;
+                      } // Assuming the status is stored in a 'status' field
+                      var orderId = keys[i];
+                      var date = order['Date'];
+                      var amount = order['amount'];
+                      var time = order['Time'];
+                      var visibleOrderId =
+                          orderId.substring(orderId.length - 4);
+                      var greyOrderId =
+                          orderId.substring(0, orderId.length - 4);
+                      Map<Object?, Object?> itemList = order['Items'] as Map;
 
-          // Parse the orders
-          Map<dynamic, dynamic> orders = Map<dynamic, dynamic>.from(
-              snapshot.data!.snapshot.value as Map<dynamic, dynamic>);
-          return ListView.builder(
-            itemCount: orders.length,
-            itemBuilder: (context, index) {
-              print("orders: $orders");
-              return ListTile(
-                title:
-                    Text(orders.values.elementAt(index)['OrderId'] as String),
-                // Add more fields as needed
-              );
-            },
-          );
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                10), // Set the border radius
+                          ),
+                          color: const Color.fromARGB(255, 255, 255, 255),
+                          elevation: 10,
+                          margin: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Row(
+                                  children: [
+                                    RichText(
+                                      text: TextSpan(
+                                        text: 'ID: ',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                        ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: greyOrderId,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Color.fromARGB(
+                                                  255, 85, 85, 85),
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: visibleOrderId,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    const Icon(
+                                      Icons.currency_rupee,
+                                      size: 14,
+                                      // weight: 50,
+                                    ),
+                                    Text(
+                                      amount.toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 70, 70, 70),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Text(
+                                  '${order['Items'].entries.map((e) => '${e.key}').join(', ')}',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      '$date, $time',
+                                      style: const TextStyle(
+                                        color: Color.fromARGB(255, 21, 21, 21),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                      right: 10.0,
+                                      bottom: 10.0,
+                                    ),
+                                    padding: const EdgeInsets.only(
+                                      top: 4.0,
+                                      bottom: 4.0,
+                                      left: 10.0,
+                                      right: 10.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: color,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      status,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
+            }
+          }
         },
       ),
     );
