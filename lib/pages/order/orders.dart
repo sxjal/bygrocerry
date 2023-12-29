@@ -16,10 +16,11 @@ class OrdersPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () async {
-              const url =
-                  'tel:8349881787'; // Replace <YourPhoneNumber> with the number you want to call
-              if (await canLaunch(url)) {
-                await launch(url);
+              const urlString = 'tel:+918349881787';
+              Uri url = Uri.parse(
+                  urlString); // Replace <YourPhoneNumber> with the number you want to call
+              if (await canLaunchUrl(url)) {
+                await launchUrl(url);
               } else {
                 throw 'Could not launch $url';
               }
