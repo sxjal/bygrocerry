@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrdersPage extends StatelessWidget {
   OrdersPage({Key? key}) : super(key: key);
@@ -12,6 +13,23 @@ class OrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              const url =
+                  'tel:8349881787'; // Replace <YourPhoneNumber> with the number you want to call
+              if (await canLaunch(url)) {
+                await launch(url);
+              } else {
+                throw 'Could not launch $url';
+              }
+            },
+            icon: const Icon(
+              Icons.call,
+              color: Colors.white,
+            ),
+          ),
+        ],
         backgroundColor: Color.fromRGBO(64, 190, 117, 1),
         title: Text(
           'Orders',
