@@ -11,14 +11,12 @@ class OrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Orders',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+        backgroundColor: Color.fromRGBO(64, 190, 117, 1),
+        title: Text(
+          'Orders',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -26,7 +24,10 @@ class OrdersPage extends StatelessWidget {
         stream: databaseReference.child('orders').onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Color.fromRGBO(64, 190, 117, 1),
+            ));
           } else {
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
@@ -62,7 +63,6 @@ class OrdersPage extends StatelessWidget {
                           orderId.substring(orderId.length - 4);
                       var greyOrderId =
                           orderId.substring(0, orderId.length - 4);
-                      Map<Object?, Object?> itemList = order['Items'] as Map;
 
                       return GestureDetector(
                         onTap: () {},

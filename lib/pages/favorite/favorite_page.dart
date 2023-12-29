@@ -22,7 +22,13 @@ class _FavoritePageState extends State<FavoritePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(64, 190, 117, 1),
-        title: Text("Favorites"),
+        title: Text(
+          "Favorites",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         leading: Icon(
           Icons.favorite,
           color: Color.fromARGB(255, 222, 61, 61),
