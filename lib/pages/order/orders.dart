@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -5,6 +6,7 @@ class OrdersPage extends StatelessWidget {
   OrdersPage({Key? key}) : super(key: key);
 
   final databaseReference = FirebaseDatabase.instance.ref();
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,11 @@ class OrdersPage extends StatelessWidget {
         ),
       ),
       body: StreamBuilder<DatabaseEvent>(
-        stream: databaseReference.child('orders').onValue,
+        stream: databaseReference
+            .child('orders')
+            .orderByChild('userId')
+            .equalTo(_auth.currentUser!.uid)
+            .onValue,
         builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -64,7 +70,6 @@ class OrdersPage extends StatelessWidget {
                           orderId.substring(0, orderId.length - 4);
 
                       return GestureDetector(
-                        onTap: () {},
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
