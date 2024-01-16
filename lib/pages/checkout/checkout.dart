@@ -128,7 +128,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
         .child('adminvariables')
         .child('deliveryFee')
         .get();
-    del.then((DataSnapshot snapshot) {
+    del.then((DataSnapshot snapshot)  {
       setState(() {
         deliveryFee = double.parse(snapshot.value.toString());
       });
