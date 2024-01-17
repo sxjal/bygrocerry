@@ -66,8 +66,10 @@ class OrdersPage extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: values.length,
                     itemBuilder: (ctx, i) {
+                      
                       var keys = values.keys.toList()
                         ..sort((a, b) => b.compareTo(a));
+                      
                       var order = values[keys[i]];
                       var status = order['Status'];
 
@@ -78,13 +80,16 @@ class OrdersPage extends StatelessWidget {
                         color = Colors.green;
                       } else if (status == "RETURNED") {
                         color = Colors.red;
-                      } // Assuming the status is stored in a 'status' field
+                      }
+                      // Assuming the status is stored in a 'status' field
                       var orderId = keys[i];
                       var date = order['Date'];
                       var amount = order['amount'];
                       var time = order['Time'];
+                      
                       var visibleOrderId =
                           orderId.substring(orderId.length - 4);
+
                       var greyOrderId =
                           orderId.substring(0, orderId.length - 4);
 
